@@ -24,7 +24,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ error, loading, onSubmit }) => {
     <>
       {error && (
         <div
-          className="mb-4 bg-red-100 border text-danger-700 px-4 py-3 rounded relative"
+          className="mb-4 bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-xl text-sm"
           role="alert"
         >
           <span className="block sm:inline">{error}</span>
@@ -47,6 +47,10 @@ const LoginForm: React.FC<LoginFormProps> = ({ error, loading, onSubmit }) => {
               label="Email"
               type="email"
               variant="bordered"
+              classNames={{
+                inputWrapper: "border-gray-200 hover:border-violet-300 focus-within:!border-violet-500",
+                label: "text-gray-600",
+              }}
             />
             <MemoizedFormikInput
               isRequired
@@ -54,31 +58,35 @@ const LoginForm: React.FC<LoginFormProps> = ({ error, loading, onSubmit }) => {
               label="Password"
               type={isVisible ? "text" : "password"}
               variant="bordered"
+              classNames={{
+                inputWrapper: "border-gray-200 hover:border-violet-300 focus-within:!border-violet-500",
+                label: "text-gray-600",
+              }}
               endContent={
                 <button
-                  className="focus:outline-none"
+                  className="focus:outline-none text-gray-400 hover:text-violet-600 transition-colors"
                   type="button"
                   onClick={toggleVisibility}
                   aria-label="toggle password visibility"
                 >
                   {isVisible ? (
-                    <EyeSlashIcon className="icon pointer-events-none" />
+                    <EyeSlashIcon className="w-5 h-5 pointer-events-none" />
                   ) : (
-                    <EyeIcon className="icon pointer-events-none" />
+                    <EyeIcon className="w-5 h-5 pointer-events-none" />
                   )}
                 </button>
               }
             />
 
-            <div className="flex flex-col gap-4 items-center justify-between">
+            <div className="pt-2">
               <Button
                 type="submit"
                 disabled={isSubmitting}
-                color="primary"
                 isLoading={loading}
                 fullWidth={true}
+                className="bg-gradient-to-r from-violet-600 to-violet-700 text-white font-medium h-11 shadow-lg shadow-violet-500/25 hover:shadow-violet-500/40 transition-all"
               >
-                {loading ? "Logging in..." : "Login"}
+                {loading ? "Signing in..." : "Sign in"}
               </Button>
             </div>
           </Form>

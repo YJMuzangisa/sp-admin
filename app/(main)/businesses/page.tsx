@@ -761,8 +761,8 @@ const BusinessCard = ({
       {/* Key Metrics */}
       <div className="grid grid-cols-4 gap-4 mb-4">
         <div className="text-center">
-          <div className="w-8 h-8 bg-blue-100 rounded-lg flex items-center justify-center mx-auto mb-1">
-            <Eye className="w-4 h-4 text-blue-600" />
+          <div className="w-8 h-8 bg-violet-100 rounded-lg flex items-center justify-center mx-auto mb-1">
+            <Eye className="w-4 h-4 text-violet-600" />
           </div>
           <p className="text-lg font-bold text-gray-900">{stats.totalMonitored}</p>
           <p className="text-xs text-gray-600">Monitored</p>
@@ -880,9 +880,9 @@ const BusinessCard = ({
 
       {/* Trial callout (extra prominence on cards) */}
       {isTrial && trialEnds && (
-        <div className="mt-3 p-2 bg-blue-50 border border-blue-200 rounded-lg">
+        <div className="mt-3 p-2 bg-violet-50 border border-violet-200 rounded-lg">
           <div className="flex items-center gap-2">
-            <Calendar className="w-4 h-4 text-blue-600" />
+            <Calendar className="w-4 h-4 text-violet-600" />
             <span className="text-sm text-blue-800">
               Trial ends {fmt(trialEnds)} {rel(trialEnds) && `(${rel(trialEnds)})`}
             </span>
@@ -1131,9 +1131,9 @@ export default function BusinessMonitoringPage() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 flex items-center justify-center p-4">
+      <div className="min-h-screen bg-gray-50/50 flex items-center justify-center p-4">
         <div className="text-center">
-          <div className="animate-spin rounded-full h-16 w-16 border-4 border-blue-500 border-t-transparent mx-auto mb-6"></div>
+          <div className="animate-spin rounded-full h-12 w-12 border-2 border-violet-200 border-t-violet-600 mx-auto mb-4"></div>
           <h3 className="text-lg font-semibold text-gray-900 mb-2">Loading Business Data</h3>
           <p className="text-gray-600">Please wait while we fetch the latest information...</p>
         </div>
@@ -1143,7 +1143,7 @@ export default function BusinessMonitoringPage() {
 
   if (error) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 p-4">
+      <div className="min-h-screen bg-gray-50/50 p-4">
         <div className="max-w-2xl mx-auto">
           <Card className="p-8 text-center shadow-lg border-0">
             <div className="w-20 h-20 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-4">
@@ -1168,13 +1168,13 @@ export default function BusinessMonitoringPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100">
+    <div className="min-h-screen bg-gray-50/50">
       <div className="p-4 sm:p-6 lg:p-8 max-w-7xl mx-auto">
         {/* Header */}
         <div className="mb-8">
           <div className="flex items-center gap-3 mb-4">
-            <div className="w-12 h-12 bg-blue-100 rounded-xl flex items-center justify-center">
-              <Building2 className="w-6 h-6 text-blue-600" />
+            <div className="w-12 h-12 bg-violet-100 rounded-xl flex items-center justify-center">
+              <Building2 className="w-6 h-6 text-violet-600" />
             </div>
             <div>
               <h1 className="text-2xl sm:text-3xl font-bold text-gray-900">Business Monitoring</h1>
@@ -1187,8 +1187,8 @@ export default function BusinessMonitoringPage() {
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
           <Card className="p-4 shadow-sm border-0 bg-white/80 backdrop-blur-sm">
             <div className="text-center">
-              <div className="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center mx-auto mb-2">
-                <Building2 className="w-5 h-5 text-blue-600" />
+              <div className="w-10 h-10 bg-violet-100 rounded-lg flex items-center justify-center mx-auto mb-2">
+                <Building2 className="w-5 h-5 text-violet-600" />
               </div>
               <p className="text-2xl font-bold text-gray-900">{summaryStats.totalBusinesses}</p>
               <p className="text-sm text-gray-600">Total Businesses</p>
