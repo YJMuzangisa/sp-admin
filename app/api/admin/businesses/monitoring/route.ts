@@ -91,7 +91,6 @@ export async function GET() {
         COUNT(
           CASE
             WHEN lo."isMonitored" = true
-             AND (lo."minPrice" IS NULL OR od."selling_price" > lo."minPrice")
             THEN 1
           END
         )::int AS "currentlyMonitored",
@@ -131,7 +130,7 @@ export async function GET() {
 
     // Minimal mapping to the shape your page expects
     const processed = businessesWithStats.map((row) => {
-      const totalOffers = (row.currentlyMonitored || 0) + (row.reachedMinPrice || 0);
+      const totalOffers = row.currentlyMonitored || 0;
       const planLimit = row.maxOffers || 0;
       const planUtilization = planLimit > 0 ? Math.min((totalOffers / planLimit) * 100, 100) : 0;
       const notInBuyBox = (row.currentlyMonitored || 0) - (row.inBuyBox || 0);
@@ -167,7 +166,7 @@ export async function GET() {
           monitoredOffers: row.totalMonitoredOffers || 0,
         },
         monitoringStats: {
-          totalMonitored: row.currentlyMonitored || 0, // monitored & above min price
+          totalMonitored: row.currentlyMonitored || 0, // all monitored offers
           inBuyBox: row.inBuyBox || 0,
           notInBuyBox: Math.max(notInBuyBox, 0),
           reachedMinPrice: row.reachedMinPrice || 0,
