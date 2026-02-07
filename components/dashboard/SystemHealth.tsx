@@ -77,7 +77,7 @@ export default function SystemHealth() {
 
   useEffect(() => {
     fetchHealth()
-    const interval = setInterval(fetchHealth, 60000)
+    const interval = setInterval(fetchHealth, 3600000) // Refresh every hour
     return () => clearInterval(interval)
   }, [])
 

@@ -99,7 +99,6 @@ export async function GET() {
         COUNT(
           CASE
             WHEN lo."isMonitored" = true
-             AND (lo."minPrice" IS NULL OR od."selling_price" > lo."minPrice")
              AND od."inBuyBox" = true
             THEN 1
           END
