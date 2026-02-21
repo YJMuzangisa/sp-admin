@@ -14,7 +14,7 @@ import {
   DropdownItem,
   Avatar,
 } from "@nextui-org/react";
-import { LogOut, Home, Mail, BarChart3, TrendingUp } from "lucide-react";
+import { LogOut, Home, Mail, BarChart3 } from "lucide-react";
 
 export default function AdminNavbar() {
   const { data: session } = useSession();
@@ -41,8 +41,8 @@ export default function AdminNavbar() {
       }}
     >
       <NavbarBrand className="gap-2">
-        <div className="w-8 h-8 bg-gradient-to-br from-violet-500 to-violet-700 rounded-lg flex items-center justify-center">
-          <TrendingUp size={18} className="text-white" />
+        <div className="w-8 h-8 bg-violet-600 rounded-lg flex items-center justify-center">
+          <span className="text-white font-bold text-lg leading-none">S</span>
         </div>
         <Link href="/" className="no-style font-semibold text-gray-900 hover:text-violet-600 transition-colors">
           SalesPath Admin
