@@ -433,6 +433,9 @@ export default function EmailPage() {
                     <div className="text-sm text-gray-500 p-3 bg-gray-50 rounded-lg">
                         <p className="font-medium text-gray-600 mb-1">Available variables</p>
                         <p><code className="bg-gray-100 px-1 rounded">{"{{name}}"}</code> — recipient&apos;s name</p>
+                        {selectedTab === "users" && (
+                            <p><code className="bg-gray-100 px-1 rounded">{"{{businessNames}}"}</code> — their business name(s)</p>
+                        )}
                         {selectedTab === "businesses" && (
                             <>
                                 <p><code className="bg-gray-100 px-1 rounded">{"{{businessName}}"}</code> — business name</p>
