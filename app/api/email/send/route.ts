@@ -29,9 +29,11 @@ export async function POST(request: NextRequest) {
 
             for (const user of users) {
                 const businessNames = user.ownedBusinesses.map(b => b.name).join(', ');
+                const firstBusinessName = user.ownedBusinesses[0]?.name || 'your business';
                 const personalizedBody = body
                     .replace(/{{name}}/g, user.name || 'there')
-                    .replace(/{{businessNames}}/g, businessNames || 'your business');
+                    .replace(/{{businessNames}}/g, businessNames || 'your business')
+                    .replace(/{{businessName}}/g, firstBusinessName);
 
                 await emailService.sendCustomEmail(
                     user.email,
