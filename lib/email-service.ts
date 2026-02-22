@@ -37,14 +37,14 @@ function emailWrapper(content: string): string {
         <td style="background:#ffffff;border-radius:20px;overflow:hidden;box-shadow:0 4px 24px rgba(0,0,0,0.08);">
 
           <!-- HERO -->
-          <table role="presentation" width="100%" cellpadding="0" cellspacing="0">
-            <tr>
-              <td style="background:linear-gradient(135deg,#7c3aed 0%,#4f46e5 100%);padding:48px 52px 44px;">
-                <p style="margin:0 0 20px;font-size:26px;line-height:1;">📣</p>
-                <h1 style="margin:0 0 10px;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;font-size:28px;font-weight:900;color:#ffffff;letter-spacing:-0.6px;line-height:1.25;">A message from SalesPath.</h1>
-              </td>
-            </tr>
-          </table>
+          <tr>
+            <td style="padding:0;font-size:0;line-height:0;">
+              <img src="https://salespath.co.za/emails/hero-default.jpg"
+                alt="SalesPath"
+                width="600"
+                style="display:block;width:100%;max-width:600px;height:auto;border-radius:20px 20px 0 0;" />
+            </td>
+          </tr>
 
           <!-- BODY -->
           <table role="presentation" width="100%" cellpadding="0" cellspacing="0">
@@ -74,19 +74,18 @@ function emailWrapper(content: string): string {
 
       <!-- FOOTER -->
       <tr>
-        <td style="padding:28px 16px 0;text-align:center;">
-          <p style="margin:0;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;font-size:13px;color:#a0a0b8;line-height:1.7;">
-            © ${new Date().getFullYear()} SalesPath &nbsp;·&nbsp;
-            <a href="${BASE_URL}" style="color:#7c3aed;text-decoration:none;font-weight:500;">salespath.co.za</a>
+        <td style="background:#0a0a0f;border-radius:0 0 20px 20px;padding:32px 48px;text-align:center;">
+          <p style="margin:0 0 14px;font-family:-apple-system,BlinkMacSystemFont,Segoe UI,sans-serif;font-size:13px;color:#6b7280;line-height:1.7;">
+            Need help? Reply to this email or reach us at
+            <a href="mailto:hi@salespath.co.za" style="color:#9b79f0;text-decoration:none;">hi@salespath.co.za</a>
           </p>
-          <p style="margin:6px 0 0;font-size:12px;color:#c0c0d0;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;">
-            You're receiving this because you have a SalesPath account.
+          <p style="margin:0;font-family:-apple-system,BlinkMacSystemFont,Segoe UI,sans-serif;font-size:12px;color:#3d3d4a;">
+            &copy; 2026 SalesPath &nbsp;&middot;&nbsp;
+            <a href="https://salespath.co.za" style="color:#3d3d4a;text-decoration:none;">salespath.co.za</a>
           </p>
         </td>
       </tr>
 
-    </table>
-  </td></tr>
 </table>
 </body>
 </html>`;
