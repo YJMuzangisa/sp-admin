@@ -32,6 +32,8 @@ model Business {
   ownerId            String
   paystackCustomerId String?           @unique
   paystackEmail      String?
+  pauseMonitoring    Boolean           @default(false)
+  ActivityLog        ActivityLog[]
   owner              User              @relation("BusinessOwner", fields: [ownerId], references: [id], onDelete: Cascade)
   Feedback           Feedback[]
   monitoredOffers    LocalOffer[]
@@ -42,6 +44,8 @@ model Business {
   managers           User[]            @relation("BusinessManager")
 
   @@index([ownerId])
+  @@index([createdAt])
+  @@index([updatedAt])
 }
 
 model LaunchSignup {
@@ -69,6 +73,13 @@ model Subscription {
   payStackEmailToken       String?            @unique
   business                 Business           @relation(fields: [businessId], references: [id], onDelete: Cascade)
   plan                     Plan               @relation(fields: [planId], references: [id])
+
+  @@index([businessId, status])
+  @@index([status, startDate, endDate])
+  @@index([businessId], map: "idx_subscription_business_id")
+  @@index([status, nextBillingDate, trialEndsAt], map: "idx_subscription_status_dates")
+  @@index([status, nextBillingDate], map: "idx_subscription_status_nextbilling")
+  @@index([status, trialEndsAt], map: "idx_subscription_status_trialends")
 }
 
 model Payment {
@@ -86,7 +97,7 @@ model Payment {
 
 model OfferDTO {
   id                   String            @id @default(cuid())
-  tsinId               Int               @map("tsin_id")
+  tsinId               BigInt            @map("tsin_id")
   imageUrl             String            @map("image_url")
   offerUrl             String            @map("offer_url")
   sku                  String
@@ -111,9 +122,13 @@ model OfferDTO {
   discountShown        Boolean           @map("discount_shown")
   createdAt            DateTime          @default(now())
   updatedAt            DateTime          @updatedAt
-  offerId              Int               @map("offer_id")
+  offerId              BigInt            @map("offer_id")
   businessId           String
   inBuyBox             Boolean           @default(false)
+  notFoundSince        DateTime?         @db.Timestamp(6)
+  notFoundWarned       Boolean?          @default(false)
+  atMinPriceSince      DateTime?         @db.Timestamp(6)
+  competitorCount      Int?              @default(0)
   localOffer           LocalOffer?       @relation("OfferDTOLocalOffer")
   PriceAdjustment      PriceAdjustment[]
   business             Business          @relation(fields: [businessId], references: [id], onDelete: Cascade)
@@ -121,6 +136,12 @@ model OfferDTO {
   @@unique([offerId, businessId])
   @@index([businessId])
   @@index([offerId])
+  @@index([offerId, businessId], map: "idx_offers_offerid_business")
+  @@index([updatedAt], map: "idx_offers_updatedat")
+  @@index([businessId, inBuyBox])
+  @@index([businessId, status, inBuyBox])
+  @@index([sellingPrice])
+  @@index([status, businessId])
   @@map("offers")
 }
 
@@ -130,18 +151,28 @@ model LocalOffer {
   minPrice             Float?
   createdAt            DateTime  @default(now())
   updatedAt            DateTime  @updatedAt
-  offerDtoId           Int
+  offerDtoId           BigInt
   businessId           String
   lastMonitored        DateTime?
   nextMonitoring       DateTime?
   receiveNotifications Boolean   @default(false)
   minPriceAlertSent    Boolean   @default(false)
+  maxPrice             Float?
+  disabledReason       String?
+  disabledAt           DateTime? @db.Timestamp(6)
   Business             Business  @relation(fields: [businessId], references: [id], onDelete: Cascade)
   offerDto             OfferDTO  @relation("OfferDTOLocalOffer", fields: [offerDtoId, businessId], references: [offerId, businessId], onDelete: Cascade)
 
   @@unique([offerDtoId, businessId])
   @@index([businessId])
   @@index([offerDtoId])
+  @@index([businessId, isMonitored, lastMonitored])
+  @@index([isMonitored, businessId, lastMonitored])
+  @@index([isMonitored, nextMonitoring])
+  @@index([nextMonitoring])
+  @@index([isMonitored, minPrice], map: "idx_localoffer_monitored_minprice")
+  @@index([offerDtoId, businessId], map: "idx_localoffer_offer_business")
+  @@index([offerDtoId, businessId], map: "idx_localoffer_offerid_business")
 }
 
 model Plan {
@@ -155,11 +186,12 @@ model Plan {
   maxManagers         Int
   monitoringFrequency Int
   payStackPlanId      String?        @unique
+  visible             Boolean        @default(true)
   subscriptions       Subscription[]
 }
 
 model Job {
-  id         String    @id @default(cuid())
+  id         String    @id @unique(map: "idx_job_id") @default(cuid())
   businessId String
   createdAt  DateTime  @default(now())
   type       JobType
@@ -169,6 +201,16 @@ model Job {
   lockedAt   DateTime?
 
   @@index([status, lockedAt])
+  @@index([businessId, status, createdAt])
+  @@index([businessId, status, updatedAt])
+  @@index([businessId, type, status])
+  @@index([status, createdAt])
+  @@index([status, updatedAt])
+  @@index([businessId, status, type], map: "idx_job_business_status_type")
+  @@index([lockedAt], map: "idx_job_locked")
+  @@index([status, type], map: "idx_job_status_type")
+  @@index([status, type, createdAt(sort: Desc)], map: "idx_job_status_type_createdat")
+  @@index([status, type, lockedAt], map: "idx_job_status_type_lockedat")
 }
 
 model Feedback {
@@ -196,7 +238,7 @@ model PasswordResetToken {
 
 model PriceAdjustment {
   id           Int      @id @default(autoincrement())
-  offerId      Int
+  offerId      BigInt
   businessId   String
   price        Float
   createdAt    DateTime @default(now())
@@ -208,6 +250,80 @@ model PriceAdjustment {
   @@index([businessId])
   @@index([offerId, businessId])
   @@index([createdAt])
+  @@index([businessId, createdAt])
+  @@index([businessId, success, createdAt])
+  @@index([success, createdAt])
+}
+
+model ActivityLog {
+  id         String   @id
+  businessId String
+  offerId    BigInt?
+  offerTitle String?
+  type       String
+  details    Json?
+  createdAt  DateTime @default(now())
+  Business   Business @relation(fields: [businessId], references: [id], onDelete: Cascade)
+
+  @@index([businessId, createdAt])
+}
+
+model Announcement {
+  id        String    @id
+  title     String
+  content   String
+  type      String    @default("feature")
+  isActive  Boolean   @default(true)
+  createdAt DateTime  @default(now())
+  expiresAt DateTime?
+
+  @@index([isActive, createdAt])
+}
+
+model BuyboxCheck {
+  id              String    @id
+  offerId         BigInt
+  businessId      String
+  checkedAt       DateTime? @default(now()) @db.Timestamp(6)
+  hasBuybox       Boolean
+  currentPrice    Decimal?  @db.Decimal(10, 2)
+  buyboxPrice     Decimal?  @db.Decimal(10, 2)
+  competitorCount Int?      @default(0)
+
+  @@index([businessId, checkedAt], map: "idx_buybox_check_business_time")
+  @@index([checkedAt], map: "idx_buybox_check_cleanup")
+  @@index([offerId, businessId], map: "idx_buybox_check_offer")
+}
+
+model BuyboxDailySummary {
+  id          String    @id
+  offerId     BigInt
+  businessId  String
+  date        DateTime  @db.Date
+  totalChecks Int?      @default(0)
+  buyboxWins  Int?      @default(0)
+  createdAt   DateTime? @default(now()) @db.Timestamp(6)
+  updatedAt   DateTime? @default(now()) @db.Timestamp(6)
+
+  @@unique([offerId, businessId, date])
+  @@index([businessId, date], map: "idx_buybox_summary_business_date")
+  @@index([offerId, businessId], map: "idx_buybox_summary_offer")
+}
+
+model LeadtimeJob {
+  id            String   @id
+  businessId    String
+  offerIds      String
+  leadtimeDays  Int
+  totalOffers   Int      @default(0)
+  status        String   @default("PENDING")
+  successCount  Int      @default(0)
+  failedCount   Int      @default(0)
+  failedMessage String?
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime
+
+  @@index([status])
 }
 
 enum SubscriptionStatus {

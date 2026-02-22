@@ -40,7 +40,7 @@ const templateGroups: Record<string, Record<string, EmailTemplate>> = {
     "Onboarding": {
         "Welcome Message": {
             subject: "Welcome to SalesPath",
-            body: `Hi {{name}},
+            body: `Hey <strong>{{name}}</strong>,
 
 Welcome to SalesPath — really glad to have you here.
 
@@ -50,7 +50,7 @@ If you run into anything or have questions, just reply to this email.`,
         },
         "Business Setup Reminder": {
             subject: "Still getting set up?",
-            body: `Hi {{name}},
+            body: `Hey <strong>{{name}}</strong>,
 
 Just checking in — it looks like your Takealot API key hasn't been connected yet.
 
@@ -62,27 +62,27 @@ If you're unsure where to find your API key or need any help, reply here and I'l
     "Subscription": {
         "Trial Ending Soon": {
             subject: "Your SalesPath trial ends soon",
-            body: `Hi {{name}},
+            body: `Hey <strong>{{name}}</strong>,
 
-Your free trial for {{businessName}} is coming to an end soon.
+Your free trial for <strong>{{businessName}}</strong> is coming to an end soon.
 
 To keep monitoring running without interruption, upgrade to a paid plan from your dashboard. If you're not sure which plan is right for you, just reply and I'll help you figure it out.`,
         },
         "Trial Expired": {
             subject: "Your SalesPath trial has ended",
-            body: `Hi {{name}},
+            body: `Hey <strong>{{name}}</strong>,
 
-Your free trial for {{businessName}} has expired and monitoring has been paused.
+Your free trial for <strong>{{businessName}}</strong> has expired and monitoring has been paused.
 
 Your data, settings, and offer rules are all still saved — you just need to upgrade to pick up right where you left off.
 
 Log in to your dashboard to choose a plan and reactivate.`,
         },
         "Payment Past Due": {
-            subject: "Action needed: payment issue on {{businessName}}",
-            body: `Hi {{name}},
+            subject: "Action needed: payment issue on <strong>{{businessName}}</strong>",
+            body: `Hey <strong>{{name}}</strong>,
 
-We weren't able to process your last payment for {{businessName}}.
+We weren't able to process your last payment for <strong>{{businessName}}</strong>.
 
 Your monitoring is still running for now, but it'll be paused if this isn't resolved soon. You can update your payment details directly from your dashboard.
 
@@ -90,19 +90,19 @@ If there's an issue or you need help sorting it out, just reply here.`,
         },
         "Upcoming Renewal Reminder": {
             subject: "Your SalesPath subscription renews soon",
-            body: `Hi {{name}},
+            body: `Hey <strong>{{name}}</strong>,
 
-Just a heads up — your SalesPath subscription for {{businessName}} will renew soon.
+Just a heads up — your SalesPath subscription for <strong>{{businessName}}</strong> will renew soon.
 
 No action needed if your card is up to date. If you'd like to make any changes before then, log in to your dashboard.`,
         },
         "Subscription Status Update": {
             subject: "Update on your SalesPath subscription",
-            body: `Hi {{name}},
+            body: `Hey <strong>{{name}}</strong>,
 
 This is a quick note regarding your subscription for {{businessName}}.
 
-Your current status is: {{status}}.
+Your current status is: <strong>{{status}}</strong>.
 
 If you have any questions or need help with anything, just reply to this email.`,
         },
@@ -110,9 +110,9 @@ If you have any questions or need help with anything, just reply to this email.`
     "Reactivation": {
         "Reactivation — Cancelled": {
             subject: "Your SalesPath account is still here",
-            body: `Hi {{name}},
+            body: `Hey <strong>{{name}}</strong>,
 
-We noticed your SalesPath subscription for {{businessName}} was cancelled.
+We noticed your SalesPath subscription for <strong>{{businessName}}</strong> was cancelled.
 
 If something wasn't working or we could have done better, I'd genuinely like to know — just reply to this email.
 
@@ -120,9 +120,9 @@ And if you ever want to get back to monitoring and winning the buybox, your acco
         },
         "Reactivation — Expired": {
             subject: "Pick up where you left off",
-            body: `Hi {{name}},
+            body: `Hey <strong>{{name}}</strong>,
 
-Your SalesPath subscription for {{businessName}} has lapsed — but your offers, rules, and settings are all still saved.
+Your SalesPath subscription for <strong>{{businessName}}</strong> has lapsed — but your offers, rules, and settings are all still saved.
 
 Reactivate anytime from your dashboard and you'll be back to monitoring your competitors straight away.`,
         },
