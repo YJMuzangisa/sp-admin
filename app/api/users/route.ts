@@ -17,21 +17,25 @@ export async function GET() {
                 email: true,
                 name: true,
                 emailVerified: true,
+                createdAt: true,
                 ownedBusinesses: {
                     select: {
                         id: true,
                         name: true,
                         subscription: {
                             select: {
-                                status: true
+                                status: true,
+                                startDate: true,
+                                trialEndsAt: true,
+                                plan: {
+                                    select: { name: true }
+                                }
                             }
                         }
                     }
                 }
             },
-            orderBy: {
-                createdAt: 'desc'
-            }
+            orderBy: { createdAt: 'desc' }
         });
 
         return NextResponse.json(users);

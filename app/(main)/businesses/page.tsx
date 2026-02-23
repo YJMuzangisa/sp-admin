@@ -39,9 +39,30 @@ import {
   Calendar,
   Send,
   CreditCard,
+  Users,
+  UserX,
+  CheckCircle,
 } from "lucide-react"
 import { format, addMonths, formatDistanceToNow } from "date-fns"
 import { Plan, SubscriptionStatus } from "@prisma/client"
+
+interface AdminUser {
+  id: string;
+  name: string | null;
+  email: string;
+  createdAt: string;
+  emailVerified: string | null;
+  ownedBusinesses: {
+    id: string;
+    name: string;
+    subscription: {
+      status: string;
+      plan: { name: string } | null;
+      startDate: string;
+      trialEndsAt: string | null;
+    } | null;
+  }[];
+}
 
 interface BusinessMonitoring {
   id: string
@@ -903,6 +924,14 @@ export default function BusinessMonitoringPage() {
   const [error, setError] = useState<string | null>(null)
   const [selectedBusiness, setSelectedBusiness] = useState<BusinessMonitoring | null>(null)
 
+  // ── Users view state ──
+  const [activeView, setActiveView] = useState<'businesses' | 'users'>('businesses')
+  const [users, setUsers] = useState<AdminUser[]>([])
+  const [filteredUsers, setFilteredUsers] = useState<AdminUser[]>([])
+  const [userSearch, setUserSearch] = useState('')
+  const [userFilter, setUserFilter] = useState<'all' | 'with_business' | 'without_business'>('all')
+  const [usersLoading, setUsersLoading] = useState(false)
+
   const editModal = useDisclosure()
   const deleteModal = useDisclosure()
   const emailModal = useDisclosure()
@@ -914,6 +943,38 @@ export default function BusinessMonitoringPage() {
   useEffect(() => {
     filterAndSortBusinesses()
   }, [searchQuery, statusFilter, sortBy, businesses])
+
+  const fetchUsers = async () => {
+    setUsersLoading(true)
+    try {
+      const res = await fetch('/api/users')
+      if (!res.ok) throw new Error('Failed to fetch users')
+      const data = await res.json()
+      setUsers(data)
+      setFilteredUsers(data)
+    } catch (err) {
+      console.error('[Users] fetch error:', err)
+    } finally {
+      setUsersLoading(false)
+    }
+  }
+
+  useEffect(() => {
+    if (activeView === 'users' && users.length === 0) fetchUsers()
+  }, [activeView])
+
+  useEffect(() => {
+    let result = users
+    if (userFilter === 'with_business') result = result.filter(u => u.ownedBusinesses.length > 0)
+    if (userFilter === 'without_business') result = result.filter(u => u.ownedBusinesses.length === 0)
+    if (userSearch) {
+      result = result.filter(u =>
+        (u.name || '').toLowerCase().includes(userSearch.toLowerCase()) ||
+        u.email.toLowerCase().includes(userSearch.toLowerCase())
+      )
+    }
+    setFilteredUsers(result)
+  }, [userSearch, userFilter, users])
 
   const fetchBusinessMonitoring = async () => {
     try {
@@ -1170,19 +1231,47 @@ export default function BusinessMonitoringPage() {
   return (
     <div className="min-h-screen bg-gray-50/50">
       <div className="p-4 sm:p-6 lg:p-8 max-w-7xl mx-auto">
-        {/* Header */}
+        {/* Header + View Switcher */}
         <div className="mb-8">
-          <div className="flex items-center gap-3 mb-4">
-            <div className="w-12 h-12 bg-violet-100 rounded-xl flex items-center justify-center">
-              <Building2 className="w-6 h-6 text-violet-600" />
+          <div className="flex items-center justify-between mb-4">
+            <div className="flex items-center gap-3">
+              <div className="w-12 h-12 bg-violet-100 rounded-xl flex items-center justify-center">
+                <Building2 className="w-6 h-6 text-violet-600" />
+              </div>
+              <div>
+                <h1 className="text-2xl sm:text-3xl font-bold text-gray-900">Business Monitoring</h1>
+                <p className="text-gray-600 mt-1">Monitor business engagement and performance</p>
+              </div>
             </div>
-            <div>
-              <h1 className="text-2xl sm:text-3xl font-bold text-gray-900">Business Monitoring</h1>
-              <p className="text-gray-600 mt-1">Monitor business engagement and performance</p>
+            <div className="flex gap-2">
+              <button
+                onClick={() => setActiveView('businesses')}
+                className={`flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-semibold border transition-all ${
+                  activeView === 'businesses'
+                    ? 'bg-violet-600 text-white border-violet-600'
+                    : 'bg-white text-gray-600 border-gray-200 hover:bg-gray-50'
+                }`}
+              >
+                <Building2 size={15} />
+                Businesses
+              </button>
+              <button
+                onClick={() => setActiveView('users')}
+                className={`flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-semibold border transition-all ${
+                  activeView === 'users'
+                    ? 'bg-violet-600 text-white border-violet-600'
+                    : 'bg-white text-gray-600 border-gray-200 hover:bg-gray-50'
+                }`}
+              >
+                <Users size={15} />
+                Users
+              </button>
             </div>
           </div>
         </div>
 
+        {activeView === 'businesses' && (
+          <>
         {/* Summary Stats */}
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
           <Card className="p-4 shadow-sm border-0 bg-white/80 backdrop-blur-sm">
@@ -1332,6 +1421,138 @@ export default function BusinessMonitoringPage() {
           business={selectedBusiness}
           onSendEmail={handleSendEmail}
         />
+        {activeView === 'businesses' && (
+          <>
+        </>
+        )}
+
+          </>
+        )}
+        {activeView === 'users' && (
+          <div>
+            {/* Summary chips */}
+            <div className="flex gap-3 mb-6">
+              <div className="bg-white border border-gray-200 rounded-xl px-4 py-2.5 text-sm">
+                <span className="font-bold text-gray-900">{users.length}</span>
+                <span className="text-gray-500 ml-1.5">Total users</span>
+              </div>
+              <div className="bg-violet-50 border border-violet-100 rounded-xl px-4 py-2.5 text-sm">
+                <span className="font-bold text-violet-700">{users.filter(u => u.ownedBusinesses.length > 0).length}</span>
+                <span className="text-violet-500 ml-1.5">With business</span>
+              </div>
+              <div className="bg-amber-50 border border-amber-100 rounded-xl px-4 py-2.5 text-sm">
+                <span className="font-bold text-amber-700">{users.filter(u => u.ownedBusinesses.length === 0).length}</span>
+                <span className="text-amber-500 ml-1.5">No business</span>
+              </div>
+            </div>
+
+            {/* Filters */}
+            <div className="flex gap-3 mb-5">
+              <div className="relative flex-1">
+                <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 w-4 h-4" />
+                <input
+                  type="text"
+                  placeholder="Search by name or email..."
+                  value={userSearch}
+                  onChange={e => setUserSearch(e.target.value)}
+                  className="w-full pl-9 pr-4 py-2.5 bg-white border border-gray-200 rounded-xl text-sm outline-none focus:border-violet-400"
+                />
+              </div>
+              <select
+                value={userFilter}
+                onChange={e => setUserFilter(e.target.value as any)}
+                className="px-3 py-2.5 bg-white border border-gray-200 rounded-xl text-sm text-gray-700 outline-none focus:border-violet-400"
+              >
+                <option value="all">All Users</option>
+                <option value="with_business">Has Business</option>
+                <option value="without_business">No Business</option>
+              </select>
+            </div>
+
+            {/* Table */}
+            <div className="bg-white rounded-2xl border border-gray-200 overflow-hidden">
+              {usersLoading ? (
+                <div className="py-16 text-center text-sm text-gray-400">Loading users...</div>
+              ) : filteredUsers.length === 0 ? (
+                <div className="py-16 text-center text-sm text-gray-400">No users found.</div>
+              ) : (
+                <table className="w-full">
+                  <thead>
+                    <tr className="bg-gray-50 border-b border-gray-100">
+                      <th className="text-left px-5 py-3 text-xs font-semibold text-gray-400 uppercase tracking-wider">User</th>
+                      <th className="text-left px-5 py-3 text-xs font-semibold text-gray-400 uppercase tracking-wider">Business</th>
+                      <th className="text-left px-5 py-3 text-xs font-semibold text-gray-400 uppercase tracking-wider">Plan</th>
+                      <th className="text-left px-5 py-3 text-xs font-semibold text-gray-400 uppercase tracking-wider">Status</th>
+                      <th className="text-left px-5 py-3 text-xs font-semibold text-gray-400 uppercase tracking-wider">Joined</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {filteredUsers.map(user => {
+                      const hasBusiness = user.ownedBusinesses.length > 0
+                      const business = user.ownedBusinesses[0]
+                      const sub = business?.subscription
+
+                      const statusColors: Record<string, string> = {
+                        ACTIVE: 'bg-green-50 text-green-700',
+                        TRIAL: 'bg-blue-50 text-blue-700',
+                        PAST_DUE: 'bg-red-50 text-red-700',
+                        EXPIRED: 'bg-gray-100 text-gray-500',
+                        CANCELLED: 'bg-gray-100 text-gray-500',
+                        PENDING: 'bg-amber-50 text-amber-700',
+                      }
+
+                      return (
+                        <tr
+                          key={user.id}
+                          className={`border-b border-gray-50 transition-colors ${
+                            hasBusiness
+                              ? 'hover:bg-gray-50'
+                              : 'bg-amber-50/40 hover:bg-amber-50/70'
+                          }`}
+                        >
+                          <td className="px-5 py-4">
+                            <div className="flex items-center gap-3">
+                              {hasBusiness
+                                ? <CheckCircle size={15} className="text-green-500 shrink-0" />
+                                : <UserX size={15} className="text-amber-400 shrink-0" />
+                              }
+                              <div>
+                                <div className="font-semibold text-gray-900 text-sm">{user.name || '—'}</div>
+                                <div className="text-xs text-gray-400">{user.email}</div>
+                              </div>
+                            </div>
+                          </td>
+                          <td className="px-5 py-4">
+                            {hasBusiness
+                              ? <span className="text-sm font-medium text-gray-900">{business.name}</span>
+                              : <span className="inline-flex items-center gap-1 text-xs font-semibold text-amber-700 bg-amber-100 px-2.5 py-1 rounded-full">
+                                  <AlertTriangle size={11} />
+                                  No business
+                                </span>
+                            }
+                          </td>
+                          <td className="px-5 py-4 text-sm text-gray-500">
+                            {sub?.plan?.name || <span className="text-gray-300">—</span>}
+                          </td>
+                          <td className="px-5 py-4">
+                            {sub
+                              ? <span className={`text-xs font-semibold px-2.5 py-1 rounded-full ${statusColors[sub.status] || 'bg-gray-100 text-gray-500'}`}>{sub.status}</span>
+                              : <span className="text-gray-300 text-sm">—</span>
+                            }
+                          </td>
+                          <td className="px-5 py-4 text-xs text-gray-400 whitespace-nowrap">
+                            {formatDistanceToNow(new Date(user.createdAt), { addSuffix: true })}
+                          </td>
+                        </tr>
+                      )
+                    })}
+                  </tbody>
+                </table>
+              )}
+            </div>
+          </div>
+        )}
+
       </div>
     </div>
   )
