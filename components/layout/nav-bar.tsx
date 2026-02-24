@@ -14,7 +14,7 @@ import {
   DropdownItem,
   Avatar,
 } from "@nextui-org/react";
-import { LogOut, Home, Mail, BarChart3, MessageSquare } from "lucide-react";
+import { LogOut, Home, Mail, BarChart3, MessageSquare, Webhook } from "lucide-react";
 
 export default function AdminNavbar() {
   const { data: session } = useSession();
@@ -29,6 +29,7 @@ export default function AdminNavbar() {
     { href: '/businesses', label: 'Businesses', icon: BarChart3 },
     { href: '/email', label: 'Email', icon: Mail },
     { href: '/feedback', label: 'Feedback', icon: MessageSquare },
+    { href: '/webhooks', label: 'Webhooks', icon: Webhook },
   ];
 
   const isActive = (href: string) => pathname === href;
@@ -128,6 +129,15 @@ export default function AdminNavbar() {
               className="sm:hidden"
             >
               Feedback
+            </DropdownItem>
+            <DropdownItem
+              key="webhooks"
+              startContent={<Webhook size={16} className="text-gray-500" />}
+              as={Link}
+              href="/webhooks"
+              className="sm:hidden"
+            >
+              Webhooks
             </DropdownItem>
             <DropdownItem
               key="logout"
