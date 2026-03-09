@@ -14,7 +14,7 @@ import {
   DropdownItem,
   Avatar,
 } from "@nextui-org/react";
-import { LogOut, Home, Mail, BarChart3, MessageSquare, Webhook } from "lucide-react";
+import { LogOut, Home, Mail, BarChart3, MessageSquare, Webhook, CalendarClock } from "lucide-react";
 
 export default function AdminNavbar() {
   const { data: session } = useSession();
