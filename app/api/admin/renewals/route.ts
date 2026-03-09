@@ -35,8 +35,7 @@ export async function GET() {
       FROM "Subscription" s
       JOIN "Business" b ON b.id = s."businessId"
       JOIN "Plan" p ON p.id = s."planId"
-      WHERE s.status = 'ACTIVE'
-        AND s."nextBillingDate" IS NOT NULL
+      WHERE s."nextBillingDate" IS NOT NULL
         AND s."nextBillingDate" >= ${now}
         AND s."nextBillingDate" <= ${threeDaysFromNow}
       ORDER BY s."nextBillingDate" ASC
