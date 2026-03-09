@@ -30,6 +30,7 @@ export default function AdminNavbar() {
     { href: '/email', label: 'Email', icon: Mail },
     { href: '/feedback', label: 'Feedback', icon: MessageSquare },
     { href: '/webhooks', label: 'Webhooks', icon: Webhook },
+    { href: '/renewals', label: 'Renewals', icon: CalendarClock },
   ];
 
   const isActive = (href: string) => pathname === href;
