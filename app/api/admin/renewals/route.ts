@@ -36,6 +36,8 @@ export async function GET() {
       JOIN "Plan" p ON p.id = s."planId"
       WHERE s."nextBillingDate" IS NOT NULL
         AND s."nextBillingDate" <= ${threeDaysFromNow}
+        AND s."nextBillingDate" >= ${now} - INTERVAL '7 days'
+        AND s.status IN ('ACTIVE', 'PAST_DUE')
         AND (s."renewalReviewedAt" IS NULL OR s."renewalReviewedAt" < s."nextBillingDate" - INTERVAL '3 days')
       ORDER BY s."nextBillingDate" ASC
     `;
