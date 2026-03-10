@@ -1,6 +1,5 @@
 import { NextResponse } from 'next/server';
 import prisma from '@/lib/prisma';
-//import axios from 'axios';
 
 const PAYSTACK_SECRET = process.env.PAYSTACK_SECRET_KEY!;
 
@@ -36,8 +35,8 @@ export async function GET() {
       JOIN "Business" b ON b.id = s."businessId"
       JOIN "Plan" p ON p.id = s."planId"
       WHERE s."nextBillingDate" IS NOT NULL
-        AND s."nextBillingDate" >= ${now}
         AND s."nextBillingDate" <= ${threeDaysFromNow}
+        AND (s."renewalReviewedAt" IS NULL OR s."renewalReviewedAt" < s."nextBillingDate" - INTERVAL '3 days')
       ORDER BY s."nextBillingDate" ASC
     `;
 
@@ -64,7 +63,6 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: 'Subscription code required' }, { status: 400 });
     }
 
-    // Get the email token from the subscription
     const subscription = await prisma.subscription.findUnique({
       where: { id: subscriptionId },
     });
@@ -73,7 +71,6 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: 'No email token found — cancel manually on Paystack' }, { status: 400 });
     }
 
-    // Disable on Paystack
     const response = await fetch('https://api.paystack.co/subscription/disable', {
       method: 'POST',
       headers: {
@@ -91,7 +88,6 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: data.message || 'Paystack cancellation failed' }, { status: 500 });
     }
 
-    // Update local DB
     await prisma.subscription.update({
       where: { id: subscriptionId },
       data: {
@@ -104,5 +100,21 @@ export async function POST(request: Request) {
   } catch (error: any) {
     console.error('Error cancelling subscription:', error);
     return NextResponse.json({ error: error.message || 'Failed to cancel subscription' }, { status: 500 });
+  }
+}
+
+// PUT: Approve a renewal (mark as reviewed)
+export async function PUT(request: Request) {
+  try {
+    const { subscriptionId } = await request.json();
+
+    await prisma.$executeRaw`
+      UPDATE "Subscription" SET "renewalReviewedAt" = NOW() WHERE id = ${subscriptionId}
+    `;
+
+    return NextResponse.json({ success: true });
+  } catch (error) {
+    console.error('Error approving renewal:', error);
+    return NextResponse.json({ error: 'Failed to approve' }, { status: 500 });
   }
 }

@@ -78,8 +78,20 @@ export default function RenewalsPage() {
     }
   };
 
-  const handleConfirm = (subscriptionId: string) => {
-    setConfirmed((prev) => new Set([...prev, subscriptionId]));
+  const handleConfirm = async (renewal: UpcomingRenewal) => {
+    try {
+      const res = await fetch('/api/admin/renewals', {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ subscriptionId: renewal.subscriptionId }),
+      });
+      if (res.ok) {
+        setRenewals((prev) => prev.filter((r) => r.subscriptionId !== renewal.subscriptionId));
+        setSuccessMsg(`Approved: ${renewal.businessName}`);
+      }
+    } catch (err) {
+      setError('Failed to approve');
+    }
   };
 
   const getDaysUntil = (dateStr: string) => {
@@ -199,7 +211,7 @@ export default function RenewalsPage() {
                     <div className="flex items-center gap-2 ml-4">
                       {!isConfirmed && (
                         <button
-                          onClick={() => handleConfirm(renewal.subscriptionId)}
+                          onClick={() => handleConfirm(renewal)}
                           className="inline-flex items-center gap-1.5 px-3 py-2 text-sm font-medium text-green-700 bg-green-50 border border-green-200 rounded-lg hover:bg-green-100 transition-colors"
                         >
                           <CheckCircle2 className="h-4 w-4" />
