@@ -29,15 +29,15 @@ type WebhookLog = {
 };
 
 const statusConfig: Record<string, { icon: React.ElementType; bg: string; text: string; label: string }> = {
-  RECEIVED: { icon: Inbox, bg: 'bg-blue-50', text: 'text-blue-700', label: 'Received' },
-  PENDING: { icon: Clock, bg: 'bg-amber-50', text: 'text-amber-700', label: 'Pending' },
+  RECEIVED: { icon: Inbox, bg: 'bg-blue-50 dark:bg-blue-900/20', text: 'text-blue-700', label: 'Received' },
+  PENDING: { icon: Clock, bg: 'bg-amber-50 dark:bg-amber-900/20', text: 'text-amber-700', label: 'Pending' },
   PROCESSED: { icon: CheckCircle2, bg: 'bg-emerald-50', text: 'text-emerald-700', label: 'Processed' },
-  FAILED: { icon: XCircle, bg: 'bg-red-50', text: 'text-red-700', label: 'Failed' },
-  SIGNATURE_FAILED: { icon: ShieldAlert, bg: 'bg-red-50', text: 'text-red-700', label: 'Sig Failed' },
-  SIGNATURE_MISSING: { icon: ShieldOff, bg: 'bg-orange-50', text: 'text-orange-700', label: 'No Sig' },
+  FAILED: { icon: XCircle, bg: 'bg-red-50 dark:bg-red-900/20', text: 'text-red-700 dark:text-red-300', label: 'Failed' },
+  SIGNATURE_FAILED: { icon: ShieldAlert, bg: 'bg-red-50 dark:bg-red-900/20', text: 'text-red-700 dark:text-red-300', label: 'Sig Failed' },
+  SIGNATURE_MISSING: { icon: ShieldOff, bg: 'bg-orange-50 dark:bg-orange-900/20', text: 'text-orange-700', label: 'No Sig' },
 };
 
-const defaultStatusConfig = { icon: AlertTriangle, bg: 'bg-gray-50', text: 'text-gray-700', label: 'Unknown' };
+const defaultStatusConfig = { icon: AlertTriangle, bg: 'bg-gray-50 dark:bg-gray-950', text: 'text-gray-700 dark:text-gray-300', label: 'Unknown' };
 
 export default function WebhooksPage() {
   const { data: session, status: authStatus } = useSession();
@@ -110,7 +110,7 @@ export default function WebhooksPage() {
   if (authStatus === 'loading' || loading) {
     return (
       <div className="flex items-center justify-center min-h-screen">
-        <RefreshCw className="h-8 w-8 animate-spin text-violet-600" />
+        <RefreshCw className="h-8 w-8 animate-spin text-violet-600 dark:text-violet-400 dark:text-violet-400" />
       </div>
     );
   }
@@ -126,7 +126,7 @@ export default function WebhooksPage() {
   return (
     <div className="p-6 max-w-7xl mx-auto">
       <div className="flex items-center justify-between mb-6">
-        <h1 className="text-2xl font-bold text-gray-900">Webhook Logs</h1>
+        <h1 className="text-2xl font-bold text-gray-900 dark:text-whitedark:text-white">Webhook Logs</h1>
         <button
           onClick={fetchLogs}
           className="flex items-center gap-2 px-4 py-2 bg-violet-600 text-white rounded-lg hover:bg-violet-700 transition-colors"
@@ -147,14 +147,14 @@ export default function WebhooksPage() {
               onClick={() => setFilter(filter === key ? 'ALL' : key)}
               className={`flex items-center gap-2 p-3 rounded-lg border transition-all ${
                 filter === key
-                  ? 'border-violet-300 bg-violet-50 ring-2 ring-violet-200'
-                  : 'border-gray-200 bg-white hover:border-gray-300'
+                  ? 'border-violet-300 bg-violet-50 dark:bg-violet-900/20 ring-2 ring-violet-200'
+                  : 'border-gray-200 dark:border-gray-700 bg-white hover:border-gray-300'
               }`}
             >
               <Icon className={`h-4 w-4 ${config.text}`} />
               <div className="text-left">
-                <p className="text-xs text-gray-500">{config.label}</p>
-                <p className="text-lg font-semibold text-gray-900">{count}</p>
+                <p className="text-xs text-gray-500 dark:text-gray-400 dark:text-gray-500  dark:text-gray-400 dark:text-gray-500 dark:text-gray-500">{config.label}</p>
+                <p className="text-lg font-semibold text-gray-900 dark:text-whitedark:text-white">{count}</p>
               </div>
             </button>
           );
@@ -163,35 +163,35 @@ export default function WebhooksPage() {
 
       {/* Search */}
       <div className="relative mb-4">
-        <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400" />
+        <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400 dark:text-gray-500 dark:text-gray-500" />
         <input
           type="text"
           placeholder="Search by event, reference, business, or error..."
           value={search}
           onChange={(e) => setSearch(e.target.value)}
-          className="w-full pl-10 pr-4 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-violet-200"
+          className="w-full pl-10 pr-4 py-2 border border-gray-200 dark:border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-violet-200"
         />
       </div>
 
       {/* Table */}
-      <div className="bg-white border border-gray-200 rounded-xl overflow-hidden">
+      <div className="bg-white border border-gray-200 dark:border-gray-700 rounded-xl overflow-hidden">
         <div className="overflow-x-auto">
           <table className="w-full text-sm">
-            <thead className="bg-gray-50 border-b border-gray-200">
+            <thead className="bg-gray-50 dark:bg-gray-950 border-b border-gray-200 dark:border-gray-700 dark:border-gray-700">
               <tr>
-                <th className="text-left px-4 py-3 font-medium text-gray-600">Time</th>
-                <th className="text-left px-4 py-3 font-medium text-gray-600">Event</th>
-                <th className="text-left px-4 py-3 font-medium text-gray-600">Reference</th>
-                <th className="text-left px-4 py-3 font-medium text-gray-600">Business</th>
-                <th className="text-left px-4 py-3 font-medium text-gray-600">Status</th>
-                <th className="text-left px-4 py-3 font-medium text-gray-600">Error</th>
-                <th className="text-left px-4 py-3 font-medium text-gray-600">Actions</th>
+                <th className="text-left px-4 py-3 font-medium text-gray-600 dark:text-gray-400 dark:text-gray-500 dark:text-gray-400 dark:text-gray-500 dark:text-gray-500">Time</th>
+                <th className="text-left px-4 py-3 font-medium text-gray-600 dark:text-gray-400 dark:text-gray-500 dark:text-gray-400 dark:text-gray-500 dark:text-gray-500">Event</th>
+                <th className="text-left px-4 py-3 font-medium text-gray-600 dark:text-gray-400 dark:text-gray-500 dark:text-gray-400 dark:text-gray-500 dark:text-gray-500">Reference</th>
+                <th className="text-left px-4 py-3 font-medium text-gray-600 dark:text-gray-400 dark:text-gray-500 dark:text-gray-400 dark:text-gray-500 dark:text-gray-500">Business</th>
+                <th className="text-left px-4 py-3 font-medium text-gray-600 dark:text-gray-400 dark:text-gray-500 dark:text-gray-400 dark:text-gray-500 dark:text-gray-500">Status</th>
+                <th className="text-left px-4 py-3 font-medium text-gray-600 dark:text-gray-400 dark:text-gray-500 dark:text-gray-400 dark:text-gray-500 dark:text-gray-500">Error</th>
+                <th className="text-left px-4 py-3 font-medium text-gray-600 dark:text-gray-400 dark:text-gray-500 dark:text-gray-400 dark:text-gray-500 dark:text-gray-500">Actions</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-gray-100">
               {filteredLogs.length === 0 ? (
                 <tr>
-                  <td colSpan={7} className="px-4 py-12 text-center text-gray-500">
+                  <td colSpan={7} className="px-4 py-12 text-center text-gray-500 dark:text-gray-400 dark:text-gray-500  dark:text-gray-400 dark:text-gray-500 dark:text-gray-500">
                     {search ? 'No matching webhooks found' : 'No webhook logs yet'}
                   </td>
                 </tr>
@@ -200,17 +200,17 @@ export default function WebhooksPage() {
                   const config = statusConfig[log.status] || defaultStatusConfig;
                   const Icon = config.icon;
                   return (
-                    <tr key={log.id} className="hover:bg-gray-50">
-                      <td className="px-4 py-3 text-gray-600 whitespace-nowrap">
+                    <tr key={log.id} className="hover:bg-gray-50 dark:hover:bg-gray-800 dark:bg-gray-950 dark:bg-gray-950">
+                      <td className="px-4 py-3 text-gray-600 dark:text-gray-400 dark:text-gray-500 whitespace-nowrap">
                         {formatDate(log.createdAt)}
                       </td>
                       <td className="px-4 py-3 font-mono text-xs text-gray-800">
                         {log.event}
                       </td>
-                      <td className="px-4 py-3 font-mono text-xs text-gray-600 max-w-[200px] truncate">
+                      <td className="px-4 py-3 font-mono text-xs text-gray-600 dark:text-gray-400 dark:text-gray-500 max-w-[200px] truncate">
                         {log.reference || '—'}
                       </td>
-                      <td className="px-4 py-3 text-gray-700">
+                      <td className="px-4 py-3 text-gray-700 dark:text-gray-300 dark:text-gray-300">
                         {log.businessName || log.businessId || '—'}
                       </td>
                       <td className="px-4 py-3">
@@ -221,7 +221,7 @@ export default function WebhooksPage() {
                           {config.label}
                         </span>
                       </td>
-                      <td className="px-4 py-3 text-red-600 text-xs max-w-[250px] truncate">
+                      <td className="px-4 py-3 text-red-600 dark:text-red-400 text-xs max-w-[250px] truncate">
                         {log.error || '—'}
                       </td>
                       <td className="px-4 py-3">
@@ -229,7 +229,7 @@ export default function WebhooksPage() {
                           <button
                             onClick={() => handleRetry(log.id)}
                             disabled={retrying === log.id}
-                            className="flex items-center gap-1 px-3 py-1 text-xs bg-violet-100 text-violet-700 rounded-lg hover:bg-violet-200 disabled:opacity-50"
+                            className="flex items-center gap-1 px-3 py-1 text-xs bg-violet-100 dark:bg-violet-900/30 text-violet-700 dark:text-violet-300 rounded-lg hover:bg-violet-200 disabled:opacity-50"
                           >
                             <RefreshCw
                               className={`h-3 w-3 ${retrying === log.id ? 'animate-spin' : ''}`}

@@ -107,40 +107,40 @@ export default function RenewalsPage() {
     const now = new Date();
     const billing = new Date(dateStr);
     const diffHours = (billing.getTime() - now.getTime()) / (1000 * 60 * 60);
-    if (diffHours < 12) return 'bg-red-50 border-red-200';
-    if (diffHours < 24) return 'bg-amber-50 border-amber-200';
-    return 'bg-white border-gray-200';
+    if (diffHours < 12) return 'bg-red-50 dark:bg-red-900/20 border-red-200 dark:border-red-800';
+    if (diffHours < 24) return 'bg-amber-50 dark:bg-amber-900/20 border-amber-200 dark:border-amber-800';
+    return 'bg-white border-gray-200 dark:border-gray-700';
   };
 
   if (loading) {
     return (
       <div className="min-h-[60vh] flex items-center justify-center">
-        <Loader2 className="h-8 w-8 animate-spin text-gray-400" />
+        <Loader2 className="h-8 w-8 animate-spin text-gray-400 dark:text-gray-500 dark:text-gray-500" />
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 p-6">
+    <div className="min-h-screen bg-gray-50 dark:bg-gray-950 p-6">
       <div className="max-w-5xl mx-auto">
         {/* Header */}
         <div className="flex items-center gap-3 mb-6">
-          <CalendarClock className="h-7 w-7 text-violet-600" />
+          <CalendarClock className="h-7 w-7 text-violet-600 dark:text-violet-400 dark:text-violet-400" />
           <div>
-            <h1 className="text-2xl font-bold text-gray-900">Upcoming Renewals</h1>
-            <p className="text-sm text-gray-500">Subscriptions billing within the next 3 days</p>
+            <h1 className="text-2xl font-bold text-gray-900 dark:text-whitedark:text-white">Upcoming Renewals</h1>
+            <p className="text-sm text-gray-500 dark:text-gray-400 dark:text-gray-500  dark:text-gray-400 dark:text-gray-500 dark:text-gray-500">Subscriptions billing within the next 3 days</p>
           </div>
         </div>
 
         {/* Messages */}
         {error && (
-          <div className="mb-4 p-3 bg-red-50 border border-red-200 rounded-lg text-sm text-red-700 flex items-center gap-2">
+          <div className="mb-4 p-3 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg text-sm text-red-700 dark:text-red-300 flex items-center gap-2">
             <AlertTriangle className="h-4 w-4 flex-shrink-0" />
             {error}
           </div>
         )}
         {successMsg && (
-          <div className="mb-4 p-3 bg-green-50 border border-green-200 rounded-lg text-sm text-green-700 flex items-center gap-2">
+          <div className="mb-4 p-3 bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 rounded-lg text-sm text-green-700 flex items-center gap-2">
             <CheckCircle2 className="h-4 w-4 flex-shrink-0" />
             {successMsg}
           </div>
@@ -148,10 +148,10 @@ export default function RenewalsPage() {
 
         {/* Empty state */}
         {renewals.length === 0 && (
-          <div className="text-center py-16 bg-white rounded-xl border border-gray-200">
+          <div className="text-center py-16 bg-white dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-700 dark:border-gray-700">
             <CheckCircle2 className="h-12 w-12 text-green-400 mx-auto mb-3" />
-            <p className="text-gray-500 font-medium">No upcoming renewals in the next 3 days</p>
-            <p className="text-sm text-gray-400 mt-1">All clear — nothing to review</p>
+            <p className="text-gray-500 dark:text-gray-400 dark:text-gray-500  font-medium">No upcoming renewals in the next 3 days</p>
+            <p className="text-sm text-gray-400 dark:text-gray-500 mt-1">All clear — nothing to review</p>
           </div>
         )}
 
@@ -173,18 +173,18 @@ export default function RenewalsPage() {
                     {/* Left: Business info */}
                     <div className="flex-1 min-w-0">
                       <div className="flex items-center gap-2">
-                        <h3 className="text-base font-semibold text-gray-900 truncate">
+                        <h3 className="text-base font-semibold text-gray-900 dark:text-whitetruncate">
                           {renewal.businessName}
                         </h3>
                         {isConfirmed && (
-                          <span className="inline-flex items-center gap-1 px-2 py-0.5 bg-green-100 text-green-700 text-xs font-medium rounded-full">
+                          <span className="inline-flex items-center gap-1 px-2 py-0.5 bg-green-100 dark:bg-green-900/30 text-green-700 text-xs font-medium rounded-full">
                             <CheckCircle2 className="h-3 w-3" />
                             Reviewed
                           </span>
                         )}
                       </div>
-                      <div className="mt-1 flex flex-wrap items-center gap-x-4 gap-y-1 text-sm text-gray-500">
-                        <span className="font-medium text-gray-700">
+                      <div className="mt-1 flex flex-wrap items-center gap-x-4 gap-y-1 text-sm text-gray-500 dark:text-gray-400 dark:text-gray-500  dark:text-gray-400 dark:text-gray-500 dark:text-gray-500">
+                        <span className="font-medium text-gray-700 dark:text-gray-300 dark:text-gray-300">
                           R{renewal.planPrice.toFixed(2)}
                         </span>
                         <span>{renewal.planName}</span>
@@ -196,7 +196,7 @@ export default function RenewalsPage() {
                         </span>
                       </div>
                       {renewal.lastPaymentDate && (
-                        <p className="mt-1 text-xs text-gray-400">
+                        <p className="mt-1 text-xs text-gray-400 dark:text-gray-500 dark:text-gray-500">
                           Last paid: {formatDistanceToNow(new Date(renewal.lastPaymentDate), { addSuffix: true })}
                         </p>
                       )}
@@ -212,7 +212,7 @@ export default function RenewalsPage() {
                       {!isConfirmed && (
                         <button
                           onClick={() => handleConfirm(renewal)}
-                          className="inline-flex items-center gap-1.5 px-3 py-2 text-sm font-medium text-green-700 bg-green-50 border border-green-200 rounded-lg hover:bg-green-100 transition-colors"
+                          className="inline-flex items-center gap-1.5 px-3 py-2 text-sm font-medium text-green-700 bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 rounded-lg hover:bg-green-100 dark:bg-green-900/30 transition-colors"
                         >
                           <CheckCircle2 className="h-4 w-4" />
                           Approve
@@ -221,7 +221,7 @@ export default function RenewalsPage() {
                       <button
                         onClick={() => handleCancel(renewal)}
                         disabled={isCancelling}
-                        className="inline-flex items-center gap-1.5 px-3 py-2 text-sm font-medium text-red-700 bg-red-50 border border-red-200 rounded-lg hover:bg-red-100 disabled:opacity-50 transition-colors"
+                        className="inline-flex items-center gap-1.5 px-3 py-2 text-sm font-medium text-red-700 dark:text-red-300 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg hover:bg-red-100 dark:bg-red-900/30 disabled:opacity-50 transition-colors"
                       >
                         {isCancelling ? (
                           <Loader2 className="h-4 w-4 animate-spin" />
@@ -240,12 +240,12 @@ export default function RenewalsPage() {
 
         {/* Summary */}
         {renewals.length > 0 && (
-          <div className="mt-6 p-4 bg-white rounded-xl border border-gray-200">
+          <div className="mt-6 p-4 bg-white dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-700 dark:border-gray-700">
             <div className="flex items-center justify-between text-sm">
-              <span className="text-gray-500">
+              <span className="text-gray-500 dark:text-gray-400 dark:text-gray-500  dark:text-gray-400 dark:text-gray-500 dark:text-gray-500">
                 {renewals.length} renewal{renewals.length !== 1 ? 's' : ''} upcoming
               </span>
-              <span className="font-semibold text-gray-900">
+              <span className="font-semibold text-gray-900 dark:text-whitedark:text-white">
                 Total: R{renewals.reduce((sum, r) => sum + r.planPrice, 0).toFixed(2)}
               </span>
             </div>

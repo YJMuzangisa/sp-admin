@@ -24,7 +24,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ error, loading, onSubmit }) => {
     <>
       {error && (
         <div
-          className="mb-4 bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-xl text-sm"
+          className="mb-4 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 text-red-700 dark:text-red-300 px-4 py-3 rounded-xl text-sm"
           role="alert"
         >
           <span className="block sm:inline">{error}</span>
@@ -48,8 +48,8 @@ const LoginForm: React.FC<LoginFormProps> = ({ error, loading, onSubmit }) => {
               type="email"
               variant="bordered"
               classNames={{
-                inputWrapper: "border-gray-200 hover:border-violet-300 focus-within:!border-violet-500",
-                label: "text-gray-600",
+                inputWrapper: "border-gray-200 dark:border-gray-700 hover:border-violet-300 focus-within:!border-violet-500",
+                label: "text-gray-600 dark:text-gray-400 dark:text-gray-500 dark:text-gray-400 dark:text-gray-500 dark:text-gray-500",
               }}
             />
             <MemoizedFormikInput
@@ -59,12 +59,12 @@ const LoginForm: React.FC<LoginFormProps> = ({ error, loading, onSubmit }) => {
               type={isVisible ? "text" : "password"}
               variant="bordered"
               classNames={{
-                inputWrapper: "border-gray-200 hover:border-violet-300 focus-within:!border-violet-500",
-                label: "text-gray-600",
+                inputWrapper: "border-gray-200 dark:border-gray-700 hover:border-violet-300 focus-within:!border-violet-500",
+                label: "text-gray-600 dark:text-gray-400 dark:text-gray-500 dark:text-gray-400 dark:text-gray-500 dark:text-gray-500",
               }}
               endContent={
                 <button
-                  className="focus:outline-none text-gray-400 hover:text-violet-600 transition-colors"
+                  className="focus:outline-none text-gray-400 dark:text-gray-500 hover:text-violet-600 dark:text-violet-400 transition-colors"
                   type="button"
                   onClick={toggleVisibility}
                   aria-label="toggle password visibility"

@@ -264,12 +264,12 @@ export default function EmailPage() {
             <Checkbox key={user.id} value={user.id} className="p-2">
                 <div className="flex flex-col">
                     <span>{user.email}</span>
-                    <span className="text-xs text-gray-500">
+                    <span className="text-xs text-gray-500 dark:text-gray-400 dark:text-gray-500  dark:text-gray-400 dark:text-gray-500 dark:text-gray-500">
                         {user.name && <span>{user.name} · </span>}
                         {user.emailVerified ? 'Verified' : 'Not Verified'}
                     </span>
                     {user.ownedBusinesses?.length > 0 && (
-                        <span className="text-xs text-gray-500">
+                        <span className="text-xs text-gray-500 dark:text-gray-400 dark:text-gray-500  dark:text-gray-400 dark:text-gray-500 dark:text-gray-500">
                             {user.ownedBusinesses.map(b => b.name).join(', ')}
                         </span>
                     )}
@@ -282,8 +282,8 @@ export default function EmailPage() {
             <Checkbox key={business.id} value={business.id} className="p-2">
                 <div className="flex flex-col">
                     <span>{business.name}</span>
-                    <span className="text-xs text-gray-500">{business.owner?.email}</span>
-                    <span className="text-xs text-gray-500">{business.subscription?.status ?? 'No subscription'}</span>
+                    <span className="text-xs text-gray-500 dark:text-gray-400 dark:text-gray-500  dark:text-gray-400 dark:text-gray-500 dark:text-gray-500">{business.owner?.email}</span>
+                    <span className="text-xs text-gray-500 dark:text-gray-400 dark:text-gray-500  dark:text-gray-400 dark:text-gray-500 dark:text-gray-500">{business.subscription?.status ?? 'No subscription'}</span>
                 </div>
             </Checkbox>
         ));
@@ -321,14 +321,14 @@ export default function EmailPage() {
                                     placeholder="Search name, email or business..."
                                     value={searchQuery}
                                     onChange={(e) => setSearchQuery(e.target.value)}
-                                    startContent={<Search size={16} className="text-gray-400" />}
+                                    startContent={<Search size={16} className="text-gray-400 dark:text-gray-500 dark:text-gray-500" />}
                                     className="flex-1"
                                     isClearable
                                     onClear={() => setSearchQuery("")}
                                 />
                             </div>
                             <div>
-                                <p className="text-sm text-gray-600 mb-2">
+                                <p className="text-sm text-gray-600 dark:text-gray-400 dark:text-gray-500 mb-2">
                                     {searchQuery ? `${recipientCount} result${recipientCount !== 1 ? 's' : ''} · ` : ''}
                                     Selected: {selectedRecipients.length}
                                 </p>
@@ -361,14 +361,14 @@ export default function EmailPage() {
                                     placeholder="Search name, email or owner..."
                                     value={searchQuery}
                                     onChange={(e) => setSearchQuery(e.target.value)}
-                                    startContent={<Search size={16} className="text-gray-400" />}
+                                    startContent={<Search size={16} className="text-gray-400 dark:text-gray-500 dark:text-gray-500" />}
                                     className="flex-1"
                                     isClearable
                                     onClear={() => setSearchQuery("")}
                                 />
                             </div>
                             <div>
-                                <p className="text-sm text-gray-600 mb-2">
+                                <p className="text-sm text-gray-600 dark:text-gray-400 dark:text-gray-500 mb-2">
                                     {searchQuery ? `${recipientCount} result${recipientCount !== 1 ? 's' : ''} · ` : ''}
                                     Selected: {selectedRecipients.length}
                                 </p>
@@ -403,7 +403,7 @@ export default function EmailPage() {
                                 key={`__group__${group}`}
                                 value=""
                                 isReadOnly
-                                className="text-xs font-semibold text-gray-400 uppercase tracking-wider pointer-events-none opacity-60"
+                                className="text-xs font-semibold text-gray-400 dark:text-gray-500 uppercase tracking-wider pointer-events-none opacity-60"
                             >
                                 {group}
                             </SelectItem>,
@@ -430,16 +430,16 @@ export default function EmailPage() {
                         minRows={6}
                     />
 
-                    <div className="text-sm text-gray-500 p-3 bg-gray-50 rounded-lg">
-                        <p className="font-medium text-gray-600 mb-1">Available variables</p>
-                        <p><code className="bg-gray-100 px-1 rounded">{"{{name}}"}</code> — recipient&apos;s name</p>
+                    <div className="text-sm text-gray-500 dark:text-gray-400 dark:text-gray-500  p-3 bg-gray-50 dark:bg-gray-950 rounded-lg">
+                        <p className="font-medium text-gray-600 dark:text-gray-400 dark:text-gray-500 mb-1">Available variables</p>
+                        <p><code className="bg-gray-100 dark:bg-gray-800 px-1 rounded">{"{{name}}"}</code> — recipient&apos;s name</p>
                         {selectedTab === "users" && (
-                            <p><code className="bg-gray-100 px-1 rounded">{"{{businessNames}}"}</code> — their business name(s)</p>
+                            <p><code className="bg-gray-100 dark:bg-gray-800 px-1 rounded">{"{{businessNames}}"}</code> — their business name(s)</p>
                         )}
                         {selectedTab === "businesses" && (
                             <>
-                                <p><code className="bg-gray-100 px-1 rounded">{"{{businessName}}"}</code> — business name</p>
-                                <p><code className="bg-gray-100 px-1 rounded">{"{{status}}"}</code> — subscription status</p>
+                                <p><code className="bg-gray-100 dark:bg-gray-800 px-1 rounded">{"{{businessName}}"}</code> — business name</p>
+                                <p><code className="bg-gray-100 dark:bg-gray-800 px-1 rounded">{"{{status}}"}</code> — subscription status</p>
                             </>
                         )}
                     </div>

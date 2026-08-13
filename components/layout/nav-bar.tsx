@@ -38,7 +38,7 @@ export default function AdminNavbar() {
   return (
     <Navbar 
       maxWidth="full" 
-      className="bg-white/80 backdrop-blur-md border-b border-gray-100"
+      className="bg-white/80 backdrop-blur-md border-b border-gray-100 dark:border-gray-800 dark:border-gray-800"
       classNames={{
         wrapper: "px-4 sm:px-6",
       }}
@@ -47,7 +47,7 @@ export default function AdminNavbar() {
         <div className="w-8 h-8 bg-violet-600 rounded-lg flex items-center justify-center">
           <span className="text-white font-bold text-lg leading-none">S</span>
         </div>
-        <Link href="/" className="no-style font-semibold text-gray-900 hover:text-violet-600 transition-colors">
+        <Link href="/" className="no-style font-semibold text-gray-900 dark:text-whitehover:text-violet-600 dark:text-violet-400 transition-colors">
           SalesPath Admin
         </Link>
       </NavbarBrand>
@@ -59,8 +59,8 @@ export default function AdminNavbar() {
               href={item.href}
               className={`no-style flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-all ${
                 isActive(item.href)
-                  ? 'bg-violet-100 text-violet-700'
-                  : 'text-gray-600 hover:bg-gray-100 hover:text-gray-900'
+                  ? 'bg-violet-100 dark:bg-violet-900/30 text-violet-700 dark:text-violet-300'
+                  : 'text-gray-600 dark:text-gray-400 dark:text-gray-500 hover:bg-gray-100 dark:hover:bg-gray-800 dark:bg-gray-800 hover:text-gray-900 dark:hover:text-white'
               }`}
             >
               <item.icon size={16} />
@@ -80,8 +80,8 @@ export default function AdminNavbar() {
               name={session?.user?.name ?? 'Admin'}
               showFallback
               classNames={{
-                base: "bg-violet-100",
-                fallback: "text-violet-600 font-medium",
+                base: "bg-violet-100 dark:bg-violet-900/30 dark:bg-violet-900/30",
+                fallback: "text-violet-600 dark:text-violet-400 font-medium",
               }}
             />
           </DropdownTrigger>
@@ -92,12 +92,12 @@ export default function AdminNavbar() {
             }}
           >
             <DropdownItem key="profile" className="h-14 gap-2" textValue="Profile">
-              <p className="text-xs text-gray-500">Signed in as</p>
-              <p className="font-medium text-gray-900 truncate">{session?.user?.email}</p>
+              <p className="text-xs text-gray-500 dark:text-gray-400 dark:text-gray-500  dark:text-gray-400 dark:text-gray-500 dark:text-gray-500">Signed in as</p>
+              <p className="font-medium text-gray-900 dark:text-whitetruncate">{session?.user?.email}</p>
             </DropdownItem>
             <DropdownItem
               key="dashboard"
-              startContent={<Home size={16} className="text-gray-500" />}
+              startContent={<Home size={16} className="text-gray-500 dark:text-gray-400 dark:text-gray-500  dark:text-gray-400 dark:text-gray-500 dark:text-gray-500" />}
               as={Link}
               href="/"
               className="sm:hidden"
@@ -106,7 +106,7 @@ export default function AdminNavbar() {
             </DropdownItem>
             <DropdownItem
               key="businesses"
-              startContent={<BarChart3 size={16} className="text-gray-500" />}
+              startContent={<BarChart3 size={16} className="text-gray-500 dark:text-gray-400 dark:text-gray-500  dark:text-gray-400 dark:text-gray-500 dark:text-gray-500" />}
               as={Link}
               href="/businesses"
               className="sm:hidden"
@@ -115,7 +115,7 @@ export default function AdminNavbar() {
             </DropdownItem>
             <DropdownItem
               key="email"
-              startContent={<Mail size={16} className="text-gray-500" />}
+              startContent={<Mail size={16} className="text-gray-500 dark:text-gray-400 dark:text-gray-500  dark:text-gray-400 dark:text-gray-500 dark:text-gray-500" />}
               as={Link}
               href="/email"
               className="sm:hidden"
@@ -124,7 +124,7 @@ export default function AdminNavbar() {
             </DropdownItem>
             <DropdownItem
               key="feedback"
-              startContent={<MessageSquare size={16} className="text-gray-500" />}
+              startContent={<MessageSquare size={16} className="text-gray-500 dark:text-gray-400 dark:text-gray-500  dark:text-gray-400 dark:text-gray-500 dark:text-gray-500" />}
               as={Link}
               href="/feedback"
               className="sm:hidden"
@@ -133,7 +133,7 @@ export default function AdminNavbar() {
             </DropdownItem>
             <DropdownItem
               key="webhooks"
-              startContent={<Webhook size={16} className="text-gray-500" />}
+              startContent={<Webhook size={16} className="text-gray-500 dark:text-gray-400 dark:text-gray-500  dark:text-gray-400 dark:text-gray-500 dark:text-gray-500" />}
               as={Link}
               href="/webhooks"
               className="sm:hidden"
@@ -145,7 +145,7 @@ export default function AdminNavbar() {
               color="danger"
               startContent={<LogOut size={16} />}
               onPress={handleLogout}
-              className="text-red-600"
+              className="text-red-600 dark:text-red-400 dark:text-red-400"
             >
               Log Out
             </DropdownItem>

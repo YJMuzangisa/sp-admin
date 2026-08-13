@@ -24,7 +24,7 @@ function LoginContent() {
 
   if (status === "loading") {
     return (
-      <div className="flex items-center justify-center min-h-screen bg-gray-50">
+      <div className="flex items-center justify-center min-h-screen bg-gray-50 dark:bg-gray-950 dark:bg-gray-950">
         <div className="w-10 h-10 border-2 border-violet-200 border-t-violet-600 rounded-full animate-spin" />
       </div>
     );
@@ -34,8 +34,8 @@ function LoginContent() {
     <div className="flex items-center justify-center min-h-screen bg-gradient-to-br from-violet-50 via-white to-gray-50 px-4">
       {/* Decorative elements */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute -top-40 -right-40 w-80 h-80 bg-violet-100 rounded-full blur-3xl opacity-50" />
-        <div className="absolute -bottom-40 -left-40 w-80 h-80 bg-violet-100 rounded-full blur-3xl opacity-50" />
+        <div className="absolute -top-40 -right-40 w-80 h-80 bg-violet-100 dark:bg-violet-900/30 rounded-full blur-3xl opacity-50" />
+        <div className="absolute -bottom-40 -left-40 w-80 h-80 bg-violet-100 dark:bg-violet-900/30 rounded-full blur-3xl opacity-50" />
       </div>
 
       <div className="w-full max-w-md relative">
@@ -46,17 +46,17 @@ function LoginContent() {
               <TrendingUp size={24} className="text-white" />
             </div>
             <div>
-              <span className="text-xl font-bold text-gray-900">SalesPath</span>
-              <span className="block text-xs text-gray-500 -mt-0.5">Admin Panel</span>
+              <span className="text-xl font-bold text-gray-900 dark:text-whitedark:text-white">SalesPath</span>
+              <span className="block text-xs text-gray-500 dark:text-gray-400 dark:text-gray-500  -mt-0.5">Admin Panel</span>
             </div>
           </div>
         </div>
 
         {/* Card */}
-        <div className="bg-white/80 backdrop-blur-sm shadow-xl shadow-gray-200/50 rounded-2xl px-8 py-8 border border-gray-100">
+        <div className="bg-white/80 backdrop-blur-sm shadow-xl shadow-gray-200/50 rounded-2xl px-8 py-8 border border-gray-100 dark:border-gray-800 dark:border-gray-800">
           <div className="text-center mb-6">
-            <h2 className="text-2xl font-semibold text-gray-900">Welcome back</h2>
-            <p className="text-gray-500 text-sm mt-1">Sign in to access the admin dashboard</p>
+            <h2 className="text-2xl font-semibold text-gray-900 dark:text-whitedark:text-white">Welcome back</h2>
+            <p className="text-gray-500 dark:text-gray-400 dark:text-gray-500  text-sm mt-1">Sign in to access the admin dashboard</p>
           </div>
           <LoginForm
             error={error}
@@ -66,7 +66,7 @@ function LoginContent() {
         </div>
 
         {/* Footer */}
-        <p className="text-center text-gray-400 text-xs mt-6">
+        <p className="text-center text-gray-400 dark:text-gray-500 text-xs mt-6">
           &copy; {new Date().getFullYear()} SalesPath. All rights reserved.
         </p>
       </div>
@@ -77,7 +77,7 @@ function LoginContent() {
 export default function Login() {
   return (
     <Suspense fallback={
-      <div className="flex items-center justify-center min-h-screen bg-gray-50">
+      <div className="flex items-center justify-center min-h-screen bg-gray-50 dark:bg-gray-950 dark:bg-gray-950">
         <div className="w-10 h-10 border-2 border-violet-200 border-t-violet-600 rounded-full animate-spin" />
       </div>
     }>

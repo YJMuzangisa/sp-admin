@@ -447,15 +447,15 @@ const DeleteBusinessModal = ({ isOpen, onClose, business, onDelete }: DeleteBusi
         <ModalHeader className="text-danger text-xl font-semibold">Delete Business</ModalHeader>
         <ModalBody>
           <div className="space-y-6">
-            <div className="p-4 bg-red-50 border border-red-200 rounded-xl">
+            <div className="p-4 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-xl">
               <h4 className="font-semibold text-red-800 mb-3 flex items-center gap-2">
                 <AlertTriangle className="w-5 h-5" />
                 This action cannot be undone!
               </h4>
-              <p className="text-red-700 text-sm mb-3">Deleting this business will permanently remove all data.</p>
+              <p className="text-red-700 dark:text-red-300 text-sm mb-3">Deleting this business will permanently remove all data.</p>
             </div>
             <div>
-              <p className="text-sm text-gray-600 mb-3">
+              <p className="text-sm text-gray-600 dark:text-gray-400 dark:text-gray-500 mb-3">
                 Type <strong>{business?.name}</strong> to confirm:
               </p>
               <Input
@@ -742,12 +742,12 @@ const BusinessCard = ({
       <div className="flex items-start justify-between mb-4">
         <div className="flex-1 min-w-0">
           <div className="flex items-center gap-3 mb-2">
-            <h3 className="text-lg font-semibold text-gray-900 truncate">{business.name}</h3>
+            <h3 className="text-lg font-semibold text-gray-900 dark:text-whitetruncate">{business.name}</h3>
             <Chip color={subscriptionStatusColors[subscription?.status || "default"]} variant="flat" size="sm" className="font-medium">
               {subscription?.status || "NO SUB"}
             </Chip>
           </div>
-          <div className="flex items-center gap-2 text-sm text-gray-600 mb-3">
+          <div className="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400 dark:text-gray-500 mb-3">
             <Mail className="w-4 h-4" />
             <span className="truncate">{business.owner.email}</span>
           </div>
@@ -755,7 +755,7 @@ const BusinessCard = ({
 
         <Dropdown placement="bottom-end">
           <DropdownTrigger>
-            <Button isIconOnly size="sm" variant="light" className="text-gray-400 hover:text-gray-600">
+            <Button isIconOnly size="sm" variant="light" className="text-gray-400 dark:text-gray-500 hover:text-gray-600 dark:text-gray-400 dark:text-gray-500 dark:text-gray-400 dark:text-gray-500 dark:text-gray-500">
               <MoreVertical className="w-4 h-4" />
             </Button>
           </DropdownTrigger>
@@ -782,40 +782,40 @@ const BusinessCard = ({
       {/* Key Metrics */}
       <div className="grid grid-cols-4 gap-4 mb-4">
         <div className="text-center">
-          <div className="w-8 h-8 bg-violet-100 rounded-lg flex items-center justify-center mx-auto mb-1">
-            <Eye className="w-4 h-4 text-violet-600" />
+          <div className="w-8 h-8 bg-violet-100 dark:bg-violet-900/30 rounded-lg flex items-center justify-center mx-auto mb-1">
+            <Eye className="w-4 h-4 text-violet-600 dark:text-violet-400 dark:text-violet-400" />
           </div>
-          <p className="text-lg font-bold text-gray-900">{stats.totalMonitored}</p>
-          <p className="text-xs text-gray-600">Monitored</p>
+          <p className="text-lg font-bold text-gray-900 dark:text-whitedark:text-white">{stats.totalMonitored}</p>
+          <p className="text-xs text-gray-600 dark:text-gray-400 dark:text-gray-500 dark:text-gray-400 dark:text-gray-500 dark:text-gray-500">Monitored</p>
         </div>
 
         <div className="text-center">
-          <div className="w-8 h-8 bg-green-100 rounded-lg flex items-center justify-center mx-auto mb-1">
-            <ShoppingCart className="w-4 h-4 text-green-600" />
+          <div className="w-8 h-8 bg-green-100 dark:bg-green-900/30 rounded-lg flex items-center justify-center mx-auto mb-1">
+            <ShoppingCart className="w-4 h-4 text-green-600 dark:text-green-400 dark:text-green-400" />
           </div>
-          <p className="text-lg font-bold text-gray-900">{stats.inBuyBox}</p>
-          <p className="text-xs text-gray-600">Buy Box</p>
+          <p className="text-lg font-bold text-gray-900 dark:text-whitedark:text-white">{stats.inBuyBox}</p>
+          <p className="text-xs text-gray-600 dark:text-gray-400 dark:text-gray-500 dark:text-gray-400 dark:text-gray-500 dark:text-gray-500">Buy Box</p>
         </div>
 
         <div className="text-center">
-          <div className="w-8 h-8 bg-amber-100 rounded-lg flex items-center justify-center mx-auto mb-1">
-            <DollarSign className="w-4 h-4 text-amber-600" />
+          <div className="w-8 h-8 bg-amber-100 dark:bg-amber-900/30 rounded-lg flex items-center justify-center mx-auto mb-1">
+            <DollarSign className="w-4 h-4 text-amber-600 dark:text-amber-400 dark:text-amber-400" />
           </div>
-          <p className="text-lg font-bold text-gray-900">{stats.reachedMinPrice}</p>
-          <p className="text-xs text-gray-600">Min Price</p>
+          <p className="text-lg font-bold text-gray-900 dark:text-whitedark:text-white">{stats.reachedMinPrice}</p>
+          <p className="text-xs text-gray-600 dark:text-gray-400 dark:text-gray-500 dark:text-gray-400 dark:text-gray-500 dark:text-gray-500">Min Price</p>
         </div>
 
         <div className="text-center">
           <div className="w-8 h-8 bg-purple-100 rounded-lg flex items-center justify-center mx-auto mb-1">
             <TrendingUp className="w-4 h-4 text-purple-600" />
           </div>
-          <p className="text-lg font-bold text-gray-900">{buyBoxRate.toFixed(0)}%</p>
-          <p className="text-xs text-gray-600">Success</p>
+          <p className="text-lg font-bold text-gray-900 dark:text-whitedark:text-white">{buyBoxRate.toFixed(0)}%</p>
+          <p className="text-xs text-gray-600 dark:text-gray-400 dark:text-gray-500 dark:text-gray-400 dark:text-gray-500 dark:text-gray-500">Success</p>
         </div>
       </div>
 
       {/* Plan / Created or Next Bill */}
-      <div className="flex items-center justify-between text-sm text-gray-600 pt-4 border-t border-gray-100">
+      <div className="flex items-center justify-between text-sm text-gray-600 dark:text-gray-400 dark:text-gray-500 pt-4 border-t border-gray-100 dark:border-gray-800 dark:border-gray-800">
         <div className="flex items-center gap-1">
           <Building2 className="w-4 h-4" />
           <span>{subscription?.plan.name || "No Plan"}</span>
@@ -832,18 +832,18 @@ const BusinessCard = ({
 
       {/* Alerts */}
       {!isActivelyMonitored && stats.totalMonitored > 0 && (
-        <div className="mt-3 p-2 bg-amber-50 border border-amber-200 rounded-lg">
+        <div className="mt-3 p-2 bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800 rounded-lg">
           <div className="flex items-center gap-2">
-            <AlertTriangle className="w-4 h-4 text-amber-600" />
-            <span className="text-sm text-amber-800">Monitoring inactive</span>
+            <AlertTriangle className="w-4 h-4 text-amber-600 dark:text-amber-400 dark:text-amber-400" />
+            <span className="text-sm text-amber-800 dark:text-amber-300 dark:text-amber-300">Monitoring inactive</span>
           </div>
         </div>
       )}
 
       {stats.planUtilization >= 90 && isActivelyMonitored && (
-        <div className="mt-3 p-2 bg-red-50 border border-red-200 rounded-lg">
+        <div className="mt-3 p-2 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg">
           <div className="flex items-center gap-2">
-            <AlertTriangle className="w-4 h-4 text-red-600" />
+            <AlertTriangle className="w-4 h-4 text-red-600 dark:text-red-400 dark:text-red-400" />
             <span className="text-sm text-red-800">Plan limit reached ({stats.planUtilization.toFixed(0)}%)</span>
           </div>
         </div>
@@ -889,10 +889,10 @@ const BusinessCard = ({
           </div>
 
           {isPastDue && (
-            <div className="mt-3 p-2 bg-amber-50 border border-amber-200 rounded-lg">
+            <div className="mt-3 p-2 bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800 rounded-lg">
               <div className="flex items-center gap-2">
-                <AlertTriangle className="w-4 h-4 text-amber-600" />
-                <span className="text-sm text-amber-800">Payment past due — please update billing.</span>
+                <AlertTriangle className="w-4 h-4 text-amber-600 dark:text-amber-400 dark:text-amber-400" />
+                <span className="text-sm text-amber-800 dark:text-amber-300 dark:text-amber-300">Payment past due — please update billing.</span>
               </div>
             </div>
           )}
@@ -901,9 +901,9 @@ const BusinessCard = ({
 
       {/* Trial callout (extra prominence on cards) */}
       {isTrial && trialEnds && (
-        <div className="mt-3 p-2 bg-violet-50 border border-violet-200 rounded-lg">
+        <div className="mt-3 p-2 bg-violet-50 dark:bg-violet-900/20 border border-violet-200 rounded-lg">
           <div className="flex items-center gap-2">
-            <Calendar className="w-4 h-4 text-violet-600" />
+            <Calendar className="w-4 h-4 text-violet-600 dark:text-violet-400 dark:text-violet-400" />
             <span className="text-sm text-blue-800">
               Trial ends {fmt(trialEnds)} {rel(trialEnds) && `(${rel(trialEnds)})`}
             </span>
@@ -1192,11 +1192,11 @@ export default function BusinessMonitoringPage() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gray-50/50 flex items-center justify-center p-4">
+      <div className="min-h-screen bg-gray-50 dark:bg-gray-950/50 flex items-center justify-center p-4">
         <div className="text-center">
           <div className="animate-spin rounded-full h-12 w-12 border-2 border-violet-200 border-t-violet-600 mx-auto mb-4"></div>
-          <h3 className="text-lg font-semibold text-gray-900 mb-2">Loading Business Data</h3>
-          <p className="text-gray-600">Please wait while we fetch the latest information...</p>
+          <h3 className="text-lg font-semibold text-gray-900 dark:text-whitemb-2">Loading Business Data</h3>
+          <p className="text-gray-600 dark:text-gray-400 dark:text-gray-500 dark:text-gray-400 dark:text-gray-500 dark:text-gray-500">Please wait while we fetch the latest information...</p>
         </div>
       </div>
     )
@@ -1204,14 +1204,14 @@ export default function BusinessMonitoringPage() {
 
   if (error) {
     return (
-      <div className="min-h-screen bg-gray-50/50 p-4">
+      <div className="min-h-screen bg-gray-50 dark:bg-gray-950/50 p-4">
         <div className="max-w-2xl mx-auto">
           <Card className="p-8 text-center shadow-lg border-0">
-            <div className="w-20 h-20 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-4">
-              <Building2 className="w-10 h-10 text-red-600" />
+            <div className="w-20 h-20 bg-red-100 dark:bg-red-900/30 rounded-full flex items-center justify-center mx-auto mb-4">
+              <Building2 className="w-10 h-10 text-red-600 dark:text-red-400 dark:text-red-400" />
             </div>
             <h3 className="text-xl font-semibold text-red-800 mb-2">Unable to Load Business Data</h3>
-            <p className="text-red-600 mb-6">{error}</p>
+            <p className="text-red-600 dark:text-red-400 mb-6">{error}</p>
             <Button
               color="primary"
               size="lg"
@@ -1229,18 +1229,18 @@ export default function BusinessMonitoringPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50/50">
+    <div className="min-h-screen bg-gray-50 dark:bg-gray-950/50">
       <div className="p-4 sm:p-6 lg:p-8 max-w-7xl mx-auto">
         {/* Header + View Switcher */}
         <div className="mb-8">
           <div className="flex items-center justify-between mb-4">
             <div className="flex items-center gap-3">
-              <div className="w-12 h-12 bg-violet-100 rounded-xl flex items-center justify-center">
-                <Building2 className="w-6 h-6 text-violet-600" />
+              <div className="w-12 h-12 bg-violet-100 dark:bg-violet-900/30 rounded-xl flex items-center justify-center">
+                <Building2 className="w-6 h-6 text-violet-600 dark:text-violet-400 dark:text-violet-400" />
               </div>
               <div>
-                <h1 className="text-2xl sm:text-3xl font-bold text-gray-900">Business Monitoring</h1>
-                <p className="text-gray-600 mt-1">Monitor business engagement and performance</p>
+                <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-whitedark:text-white">Business Monitoring</h1>
+                <p className="text-gray-600 dark:text-gray-400 dark:text-gray-500 mt-1">Monitor business engagement and performance</p>
               </div>
             </div>
             <div className="flex gap-2">
@@ -1249,7 +1249,7 @@ export default function BusinessMonitoringPage() {
                 className={`flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-semibold border transition-all ${
                   activeView === 'businesses'
                     ? 'bg-violet-600 text-white border-violet-600'
-                    : 'bg-white text-gray-600 border-gray-200 hover:bg-gray-50'
+                    : 'bg-white text-gray-600 dark:text-gray-400 dark:text-gray-500 border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-800 dark:bg-gray-950'
                 }`}
               >
                 <Building2 size={15} />
@@ -1260,7 +1260,7 @@ export default function BusinessMonitoringPage() {
                 className={`flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-semibold border transition-all ${
                   activeView === 'users'
                     ? 'bg-violet-600 text-white border-violet-600'
-                    : 'bg-white text-gray-600 border-gray-200 hover:bg-gray-50'
+                    : 'bg-white text-gray-600 dark:text-gray-400 dark:text-gray-500 border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-800 dark:bg-gray-950'
                 }`}
               >
                 <Users size={15} />
@@ -1276,21 +1276,21 @@ export default function BusinessMonitoringPage() {
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
           <Card className="p-4 shadow-sm border-0 bg-white/80 backdrop-blur-sm">
             <div className="text-center">
-              <div className="w-10 h-10 bg-violet-100 rounded-lg flex items-center justify-center mx-auto mb-2">
-                <Building2 className="w-5 h-5 text-violet-600" />
+              <div className="w-10 h-10 bg-violet-100 dark:bg-violet-900/30 rounded-lg flex items-center justify-center mx-auto mb-2">
+                <Building2 className="w-5 h-5 text-violet-600 dark:text-violet-400 dark:text-violet-400" />
               </div>
-              <p className="text-2xl font-bold text-gray-900">{summaryStats.totalBusinesses}</p>
-              <p className="text-sm text-gray-600">Total Businesses</p>
+              <p className="text-2xl font-bold text-gray-900 dark:text-whitedark:text-white">{summaryStats.totalBusinesses}</p>
+              <p className="text-sm text-gray-600 dark:text-gray-400 dark:text-gray-500 dark:text-gray-400 dark:text-gray-500 dark:text-gray-500">Total Businesses</p>
             </div>
           </Card>
 
           <Card className="p-4 shadow-sm border-0 bg-white/80 backdrop-blur-sm">
             <div className="text-center">
-              <div className="w-10 h-10 bg-green-100 rounded-lg flex items-center justify-center mx-auto mb-2">
-                <Activity className="w-5 h-5 text-green-600" />
+              <div className="w-10 h-10 bg-green-100 dark:bg-green-900/30 rounded-lg flex items-center justify-center mx-auto mb-2">
+                <Activity className="w-5 h-5 text-green-600 dark:text-green-400 dark:text-green-400" />
               </div>
-              <p className="text-2xl font-bold text-gray-900">{summaryStats.activelyMonitoring}</p>
-              <p className="text-sm text-gray-600">Active Monitoring</p>
+              <p className="text-2xl font-bold text-gray-900 dark:text-whitedark:text-white">{summaryStats.activelyMonitoring}</p>
+              <p className="text-sm text-gray-600 dark:text-gray-400 dark:text-gray-500 dark:text-gray-400 dark:text-gray-500 dark:text-gray-500">Active Monitoring</p>
             </div>
           </Card>
 
@@ -1299,18 +1299,18 @@ export default function BusinessMonitoringPage() {
               <div className="w-10 h-10 bg-purple-100 rounded-lg flex items-center justify-center mx-auto mb-2">
                 <ShoppingCart className="w-5 h-5 text-purple-600" />
               </div>
-              <p className="text-2xl font-bold text-gray-900">{summaryStats.totalInBuyBox}</p>
-              <p className="text-sm text-gray-600">In Buy Box</p>
+              <p className="text-2xl font-bold text-gray-900 dark:text-whitedark:text-white">{summaryStats.totalInBuyBox}</p>
+              <p className="text-sm text-gray-600 dark:text-gray-400 dark:text-gray-500 dark:text-gray-400 dark:text-gray-500 dark:text-gray-500">In Buy Box</p>
             </div>
           </Card>
 
           <Card className="p-4 shadow-sm border-0 bg-white/80 backdrop-blur-sm">
             <div className="text-center">
-              <div className="w-10 h-10 bg-amber-100 rounded-lg flex items-center justify-center mx-auto mb-2">
-                <TrendingUp className="w-5 h-5 text-amber-600" />
+              <div className="w-10 h-10 bg-amber-100 dark:bg-amber-900/30 rounded-lg flex items-center justify-center mx-auto mb-2">
+                <TrendingUp className="w-5 h-5 text-amber-600 dark:text-amber-400 dark:text-amber-400" />
               </div>
-              <p className="text-2xl font-bold text-gray-900">{summaryStats.averageBuyBoxRate.toFixed(1)}%</p>
-              <p className="text-sm text-gray-600">Success Rate</p>
+              <p className="text-2xl font-bold text-gray-900 dark:text-whitedark:text-white">{summaryStats.averageBuyBoxRate.toFixed(1)}%</p>
+              <p className="text-sm text-gray-600 dark:text-gray-400 dark:text-gray-500 dark:text-gray-400 dark:text-gray-500 dark:text-gray-500">Success Rate</p>
             </div>
           </Card>
         </div>
@@ -1323,7 +1323,7 @@ export default function BusinessMonitoringPage() {
                 placeholder="Search businesses or owners..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                startContent={<Search className="w-4 h-4 text-gray-400" />}
+                startContent={<Search className="w-4 h-4 text-gray-400 dark:text-gray-500 dark:text-gray-500" />}
                 variant="bordered"
                 classNames={{ inputWrapper: "bg-white" }}
               />
@@ -1336,7 +1336,7 @@ export default function BusinessMonitoringPage() {
                 onChange={(e) => setStatusFilter(e.target.value)}
                 className="w-full sm:w-64"
                 variant="bordered"
-                startContent={<Filter className="w-4 h-4 text-gray-400" />}
+                startContent={<Filter className="w-4 h-4 text-gray-400 dark:text-gray-500 dark:text-gray-500" />}
                 classNames={{ trigger: "bg-white" }}
               >
                 {[
@@ -1387,11 +1387,11 @@ export default function BusinessMonitoringPage() {
 
         {filteredBusinesses.length === 0 && !loading && (
           <Card className="p-12 text-center shadow-sm border-0 bg-white/80 backdrop-blur-sm">
-            <div className="w-20 h-20 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-6">
-              <Building2 className="w-10 h-10 text-gray-400" />
+            <div className="w-20 h-20 bg-gray-100 dark:bg-gray-800 rounded-full flex items-center justify-center mx-auto mb-6">
+              <Building2 className="w-10 h-10 text-gray-400 dark:text-gray-500 dark:text-gray-500" />
             </div>
-            <h3 className="text-xl font-semibold text-gray-900 mb-2">No businesses found</h3>
-            <p className="text-gray-600">
+            <h3 className="text-xl font-semibold text-gray-900 dark:text-whitemb-2">No businesses found</h3>
+            <p className="text-gray-600 dark:text-gray-400 dark:text-gray-500 dark:text-gray-400 dark:text-gray-500 dark:text-gray-500">
               {searchQuery || statusFilter !== "all"
                 ? "Try adjusting your search or filters."
                 : "No businesses have been created yet."}
@@ -1432,16 +1432,16 @@ export default function BusinessMonitoringPage() {
           <div>
             {/* Summary chips */}
             <div className="flex gap-3 mb-6">
-              <div className="bg-white border border-gray-200 rounded-xl px-4 py-2.5 text-sm">
-                <span className="font-bold text-gray-900">{users.length}</span>
-                <span className="text-gray-500 ml-1.5">Total users</span>
+              <div className="bg-white border border-gray-200 dark:border-gray-700 rounded-xl px-4 py-2.5 text-sm">
+                <span className="font-bold text-gray-900 dark:text-whitedark:text-white">{users.length}</span>
+                <span className="text-gray-500 dark:text-gray-400 dark:text-gray-500  ml-1.5">Total users</span>
               </div>
-              <div className="bg-violet-50 border border-violet-100 rounded-xl px-4 py-2.5 text-sm">
-                <span className="font-bold text-violet-700">{users.filter(u => u.ownedBusinesses.length > 0).length}</span>
+              <div className="bg-violet-50 dark:bg-violet-900/20 border border-violet-100 rounded-xl px-4 py-2.5 text-sm">
+                <span className="font-bold text-violet-700 dark:text-violet-300 dark:text-violet-300">{users.filter(u => u.ownedBusinesses.length > 0).length}</span>
                 <span className="text-violet-500 ml-1.5">With business</span>
               </div>
-              <div className="bg-amber-50 border border-amber-100 rounded-xl px-4 py-2.5 text-sm">
-                <span className="font-bold text-amber-700">{users.filter(u => u.ownedBusinesses.length === 0).length}</span>
+              <div className="bg-amber-50 dark:bg-amber-900/20 border border-amber-100 rounded-xl px-4 py-2.5 text-sm">
+                <span className="font-bold text-amber-700 dark:text-amber-300">{users.filter(u => u.ownedBusinesses.length === 0).length}</span>
                 <span className="text-amber-500 ml-1.5">No business</span>
               </div>
             </div>
@@ -1449,19 +1449,19 @@ export default function BusinessMonitoringPage() {
             {/* Filters */}
             <div className="flex gap-3 mb-5">
               <div className="relative flex-1">
-                <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 w-4 h-4" />
+                <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 dark:text-gray-500 w-4 h-4" />
                 <input
                   type="text"
                   placeholder="Search by name or email..."
                   value={userSearch}
                   onChange={e => setUserSearch(e.target.value)}
-                  className="w-full pl-9 pr-4 py-2.5 bg-white border border-gray-200 rounded-xl text-sm outline-none focus:border-violet-400"
+                  className="w-full pl-9 pr-4 py-2.5 bg-white border border-gray-200 dark:border-gray-700 rounded-xl text-sm outline-none focus:border-violet-400"
                 />
               </div>
               <select
                 value={userFilter}
                 onChange={e => setUserFilter(e.target.value as any)}
-                className="px-3 py-2.5 bg-white border border-gray-200 rounded-xl text-sm text-gray-700 outline-none focus:border-violet-400"
+                className="px-3 py-2.5 bg-white border border-gray-200 dark:border-gray-700 rounded-xl text-sm text-gray-700 dark:text-gray-300 outline-none focus:border-violet-400"
               >
                 <option value="all">All Users</option>
                 <option value="with_business">Has Business</option>
@@ -1470,20 +1470,20 @@ export default function BusinessMonitoringPage() {
             </div>
 
             {/* Table */}
-            <div className="bg-white rounded-2xl border border-gray-200 overflow-hidden">
+            <div className="bg-white dark:bg-gray-900 rounded-2xl border border-gray-200 dark:border-gray-700 overflow-hidden">
               {usersLoading ? (
-                <div className="py-16 text-center text-sm text-gray-400">Loading users...</div>
+                <div className="py-16 text-center text-sm text-gray-400 dark:text-gray-500 dark:text-gray-500">Loading users...</div>
               ) : filteredUsers.length === 0 ? (
-                <div className="py-16 text-center text-sm text-gray-400">No users found.</div>
+                <div className="py-16 text-center text-sm text-gray-400 dark:text-gray-500 dark:text-gray-500">No users found.</div>
               ) : (
                 <table className="w-full">
                   <thead>
-                    <tr className="bg-gray-50 border-b border-gray-100">
-                      <th className="text-left px-5 py-3 text-xs font-semibold text-gray-400 uppercase tracking-wider">User</th>
-                      <th className="text-left px-5 py-3 text-xs font-semibold text-gray-400 uppercase tracking-wider">Business</th>
-                      <th className="text-left px-5 py-3 text-xs font-semibold text-gray-400 uppercase tracking-wider">Plan</th>
-                      <th className="text-left px-5 py-3 text-xs font-semibold text-gray-400 uppercase tracking-wider">Status</th>
-                      <th className="text-left px-5 py-3 text-xs font-semibold text-gray-400 uppercase tracking-wider">Joined</th>
+                    <tr className="bg-gray-50 dark:bg-gray-950 border-b border-gray-100 dark:border-gray-800 dark:border-gray-800">
+                      <th className="text-left px-5 py-3 text-xs font-semibold text-gray-400 dark:text-gray-500 uppercase tracking-wider">User</th>
+                      <th className="text-left px-5 py-3 text-xs font-semibold text-gray-400 dark:text-gray-500 uppercase tracking-wider">Business</th>
+                      <th className="text-left px-5 py-3 text-xs font-semibold text-gray-400 dark:text-gray-500 uppercase tracking-wider">Plan</th>
+                      <th className="text-left px-5 py-3 text-xs font-semibold text-gray-400 dark:text-gray-500 uppercase tracking-wider">Status</th>
+                      <th className="text-left px-5 py-3 text-xs font-semibold text-gray-400 dark:text-gray-500 uppercase tracking-wider">Joined</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -1493,12 +1493,12 @@ export default function BusinessMonitoringPage() {
                       const sub = business?.subscription
 
                       const statusColors: Record<string, string> = {
-                        ACTIVE: 'bg-green-50 text-green-700',
-                        TRIAL: 'bg-blue-50 text-blue-700',
-                        PAST_DUE: 'bg-red-50 text-red-700',
-                        EXPIRED: 'bg-gray-100 text-gray-500',
-                        CANCELLED: 'bg-gray-100 text-gray-500',
-                        PENDING: 'bg-amber-50 text-amber-700',
+                        ACTIVE: 'bg-green-50 dark:bg-green-900/20 text-green-700',
+                        TRIAL: 'bg-blue-50 dark:bg-blue-900/20 text-blue-700',
+                        PAST_DUE: 'bg-red-50 dark:bg-red-900/20 text-red-700 dark:text-red-300',
+                        EXPIRED: 'bg-gray-100 dark:bg-gray-800 text-gray-500 dark:text-gray-400 dark:text-gray-500 ',
+                        CANCELLED: 'bg-gray-100 dark:bg-gray-800 text-gray-500 dark:text-gray-400 dark:text-gray-500 ',
+                        PENDING: 'bg-amber-50 dark:bg-amber-900/20 text-amber-700',
                       }
 
                       return (
@@ -1506,8 +1506,8 @@ export default function BusinessMonitoringPage() {
                           key={user.id}
                           className={`border-b border-gray-50 transition-colors ${
                             hasBusiness
-                              ? 'hover:bg-gray-50'
-                              : 'bg-amber-50/40 hover:bg-amber-50/70'
+                              ? 'hover:bg-gray-50 dark:hover:bg-gray-800 dark:bg-gray-950'
+                              : 'bg-amber-50 dark:bg-amber-900/20/40 hover:bg-amber-50 dark:bg-amber-900/20/70'
                           }`}
                         >
                           <td className="px-5 py-4">
@@ -1517,30 +1517,30 @@ export default function BusinessMonitoringPage() {
                                 : <UserX size={15} className="text-amber-400 shrink-0" />
                               }
                               <div>
-                                <div className="font-semibold text-gray-900 text-sm">{user.name || '—'}</div>
-                                <div className="text-xs text-gray-400">{user.email}</div>
+                                <div className="font-semibold text-gray-900 dark:text-whitetext-sm">{user.name || '—'}</div>
+                                <div className="text-xs text-gray-400 dark:text-gray-500 dark:text-gray-500">{user.email}</div>
                               </div>
                             </div>
                           </td>
                           <td className="px-5 py-4">
                             {hasBusiness
-                              ? <span className="text-sm font-medium text-gray-900">{business.name}</span>
-                              : <span className="inline-flex items-center gap-1 text-xs font-semibold text-amber-700 bg-amber-100 px-2.5 py-1 rounded-full">
+                              ? <span className="text-sm font-medium text-gray-900 dark:text-whitedark:text-white">{business.name}</span>
+                              : <span className="inline-flex items-center gap-1 text-xs font-semibold text-amber-700 bg-amber-100 dark:bg-amber-900/30 px-2.5 py-1 rounded-full">
                                   <AlertTriangle size={11} />
                                   No business
                                 </span>
                             }
                           </td>
-                          <td className="px-5 py-4 text-sm text-gray-500">
+                          <td className="px-5 py-4 text-sm text-gray-500 dark:text-gray-400 dark:text-gray-500  dark:text-gray-400 dark:text-gray-500 dark:text-gray-500">
                             {sub?.plan?.name || <span className="text-gray-300">—</span>}
                           </td>
                           <td className="px-5 py-4">
                             {sub
-                              ? <span className={`text-xs font-semibold px-2.5 py-1 rounded-full ${statusColors[sub.status] || 'bg-gray-100 text-gray-500'}`}>{sub.status}</span>
+                              ? <span className={`text-xs font-semibold px-2.5 py-1 rounded-full ${statusColors[sub.status] || 'bg-gray-100 dark:bg-gray-800 text-gray-500 dark:text-gray-400 dark:text-gray-500 '}`}>{sub.status}</span>
                               : <span className="text-gray-300 text-sm">—</span>
                             }
                           </td>
-                          <td className="px-5 py-4 text-xs text-gray-400 whitespace-nowrap">
+                          <td className="px-5 py-4 text-xs text-gray-400 dark:text-gray-500 whitespace-nowrap">
                             {formatDistanceToNow(new Date(user.createdAt), { addSuffix: true })}
                           </td>
                         </tr>
